@@ -11,8 +11,8 @@
   --fg-muted: rgb(242 239 233 / 0.62);
   --ink: #141412;
   --ink-muted: rgb(20 20 18 / 0.64);
-  --accent: #ff7eb6;
-  --accent-ink: #b5175f; /* accent darkened for text on paper (AA) */
+  --accent: #ff4d94;
+  --accent-ink: #c2185b; /* accent darkened for text on paper (AA) */
   --line: rgb(242 239 233 / 0.16);
   --line-ink: rgb(20 20 18 / 0.14);
 
