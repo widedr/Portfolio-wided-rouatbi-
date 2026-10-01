@@ -2,7 +2,7 @@
 
 /* ─────────────────────────────────────────────────────────────
    Design tokens — Wided Rouatbi
-   Warm black + paper, one terracotta accent.
+   Warm black + paper, one pink accent.
    ───────────────────────────────────────────────────────────── */
 :root {
   --bg: #0f0f0e;
@@ -11,8 +11,8 @@
   --fg-muted: rgb(242 239 233 / 0.62);
   --ink: #141412;
   --ink-muted: rgb(20 20 18 / 0.64);
-  --accent: #e2683c;
-  --accent-ink: #b8481f; /* accent darkened for text on paper (AA) */
+  --accent: #ff7eb6;
+  --accent-ink: #b5175f; /* accent darkened for text on paper (AA) */
   --line: rgb(242 239 233 / 0.16);
   --line-ink: rgb(20 20 18 / 0.14);
 

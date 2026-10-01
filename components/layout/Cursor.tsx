@@ -96,7 +96,7 @@ export function Cursor() {
           className="absolute left-0 top-0 size-10 rounded-full border transition-[transform,background-color,border-color,opacity] duration-400 ease-out"
           style={{
             transform: `translate(-50%, -50%) scale(${ringScale * (pressed && pill ? 0.9 : 1)})`,
-            backgroundColor: pill ? "var(--accent)" : state === "link" ? "rgb(226 104 60 / 0.18)" : "transparent",
+            backgroundColor: pill ? "var(--accent)" : state === "link" ? "rgb(255 126 182 / 0.2)" : "transparent",
             borderColor: pill || state === "link" ? "transparent" : "rgb(242 239 233 / 0.5)",
             opacity: state === "hide" ? 0 : 1,
           }}
