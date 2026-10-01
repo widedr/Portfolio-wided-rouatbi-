@@ -84,8 +84,8 @@ export function Hero({ dict }: { dict: Dictionary }) {
           </span>
         </p>
 
-        <p data-fade data-hero-intro className="text-body-l mt-10 max-w-[38ch]">
-          {t.lead} <em className="text-accent">{t.leadEm}</em>
+        <p data-fade data-hero-intro className="text-meta mt-10 max-w-[52ch] leading-relaxed text-fg-muted">
+          {t.lead} {t.leadEm}
         </p>
 
         <div data-fade data-hero-intro className="mt-10">
