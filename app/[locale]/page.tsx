@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { getDictionary, isLocale } from "@/lib/i18n";
 import { featuredProjects } from "@/lib/projects";
-import { HeroCarousel } from "@/components/home/HeroCarousel";
+import { Hero } from "@/components/home/Hero";
+import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
 import { Intro } from "@/components/home/Intro";
 import { SelectedWork } from "@/components/home/SelectedWork";
 import { Bands } from "@/components/home/Bands";
@@ -27,7 +28,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <>
-      <HeroCarousel slides={slides} locale={locale} dict={dict} />
+      <Hero dict={dict} />
+      <FeaturedCarousel slides={slides} locale={locale} dict={dict} />
       <Intro dict={dict} locale={locale} />
       <SelectedWork dict={dict} locale={locale} />
       <Bands dict={dict} />

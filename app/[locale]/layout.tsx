@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
@@ -11,11 +11,10 @@ import { PointerFill } from "@/components/layout/PointerFill";
 import { RouteAnnouncer } from "@/components/layout/RouteAnnouncer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
-const fraunces = Fraunces({
+const display = Inter_Tight({
   subsets: ["latin"],
-  axes: ["opsz", "SOFT", "WONK"],
   style: ["normal", "italic"],
-  variable: "--font-fraunces",
+  variable: "--font-display-face",
   display: "swap",
 });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -64,7 +63,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const dict = getDictionary(locale);
 
   return (
-    <html lang={locale} className={`${fraunces.variable} ${inter.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang={locale} className={`${display.variable} ${inter.variable} ${mono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
         <noscript>

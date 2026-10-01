@@ -149,7 +149,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
           <span
             key={i}
             data-name-char
-            className="inline-block font-display text-[clamp(4rem,23vw,26rem)] font-[340] tracking-[-0.04em]"
+            className="inline-block font-display text-[clamp(4rem,23vw,26rem)] font-medium tracking-[-0.04em]"
           >
             {c}
           </span>

@@ -202,8 +202,8 @@ export const projects: Project[] = sourceProjects.map((p, i) => {
 
 export const featuredProjects = projects.filter((p) => p.featured);
 
-/** Home "selected work" grid: featured first, then a few strong platform projects. */
-export const selectedProjects = ["mathis-bs", "attunea", "travel-shaper", "carrefour-tn", "five-guys", "clever-harvest"].map(
+/** Home "selected work" grid: strong projects not already in the featured carousel. */
+export const selectedProjects = ["five-guys", "clever-harvest", "planet-tax-solution", "convergence", "bridge-global-funding", "masaya"].map(
   (slug) => getProject(slug)!,
 );
 

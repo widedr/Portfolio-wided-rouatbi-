@@ -29,7 +29,7 @@ export function Context({
             <div key={f.label} data-fact className="border-t border-line pt-5">
               <dt className="sr-only">{f.label}</dt>
               <dd>
-                <span className="block font-display text-[clamp(2.25rem,4.2vw,4.5rem)] font-[340] leading-none tracking-[-0.03em]">{f.value}</span>
+                <span className="block font-display text-[clamp(2.25rem,4.2vw,4.5rem)] font-medium leading-none tracking-[-0.03em]">{f.value}</span>
                 <span className="mt-2 block text-ink-muted" aria-hidden="true">
                   {f.label}
                 </span>

@@ -6,12 +6,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { format, href } from "@/lib/i18n";
 import type { Project } from "@/lib/projects";
-import { Draggable, duration, ease, gsap, mq, prefersReducedMotion, SplitText, stagger, useGSAP, whenLoaderDone } from "@/lib/motion";
+import { Draggable, duration, ease, gsap, mq, prefersReducedMotion, SplitText, stagger, useGSAP } from "@/lib/motion";
 import { ArrowSwap } from "@/components/layout/RollText";
 
 type Slide = Pick<Project, "slug" | "title" | "tagline" | "sector" | "year" | "role" | "employer" | "cover" | "theme">;
 
-export function HeroCarousel({ slides, locale, dict }: { slides: Slide[]; locale: Locale; dict: Dictionary }) {
+export function FeaturedCarousel({ slides, locale, dict }: { slides: Slide[]; locale: Locale; dict: Dictionary }) {
   const root = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const draggable = useRef<Draggable | null>(null);
@@ -121,26 +121,15 @@ export function HeroCarousel({ slides, locale, dict }: { slides: Slide[]; locale
     return () => el.removeEventListener("wheel", onWheel);
   }, [total]);
 
-  // Entrance after the loader: slides glide in from the right, title letters rise, sector line last.
+  // Entrance on scroll: slides glide in from the right, controls fade in last.
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
       mm.add(mq.motion, () => {
-        // Lift the CSS pre-hide first so `from` tweens record the visible state as their end.
-        gsap.set("[data-hero-intro]", { opacity: 1 });
-        const split = SplitText.create("[data-hero-title]", { type: "lines", mask: "lines" });
-        const tl = gsap.timeline({ paused: true });
-        tl.from("[data-slide]", { xPercent: 40, opacity: 0, duration: duration.long, ease: ease.out, stagger: stagger.items })
-          .from(split.lines, { yPercent: 110, duration: duration.base, ease: ease.out, stagger: stagger.lines }, 0.15)
-          .from("[data-hero-meta]", { opacity: 0, y: 16, duration: duration.base, ease: ease.out, stagger: stagger.items }, 0.5);
-        const off = whenLoaderDone(() => tl.play());
-        return () => {
-          off();
-          split.revert();
-        };
-      });
-      mm.add(mq.reduced, () => {
-        gsap.set("[data-hero-intro]", { opacity: 1 });
+        gsap
+          .timeline({ scrollTrigger: { trigger: root.current, start: "top 75%", once: true } })
+          .from("[data-slide]", { xPercent: 30, opacity: 0, duration: duration.long, ease: ease.out, stagger: stagger.items })
+          .from("[data-carousel-meta]", { opacity: 0, y: 16, duration: duration.base, ease: ease.out }, 0.4);
       });
       return () => mm.revert();
     },
@@ -182,29 +171,17 @@ export function HeroCarousel({ slides, locale, dict }: { slides: Slide[]; locale
   };
 
   return (
-    <section
-      ref={root}
-      className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[calc(var(--header-h)+2vh)]"
-      aria-labelledby="hero-title"
-    >
-      {/* Who + what, readable in under five seconds */}
-      <div className="grid-site px-site">
-        <p data-hero-intro data-hero-meta className="text-meta col-span-4 text-fg-muted md:col-span-6 lg:col-span-12">
-          {t.eyebrow}
-        </p>
-        <h1
-          id="hero-title"
-          data-hero-intro
-          data-hero-title
-          className="text-h2 col-span-4 mt-4 md:col-span-5 lg:col-span-7"
-        >
-          {t.title} <em className="text-accent">{t.titleEm}</em>
-        </h1>
+    <section ref={root} id="featured" className="relative overflow-hidden py-section" aria-labelledby="featured-title">
+      <div className="mb-12 flex items-end justify-between gap-6 px-site">
+        <h2 id="featured-title" className="text-meta text-fg-muted">
+          01 — {t.carouselLabel}
+        </h2>
+        <span className="text-meta hidden text-fg-muted lg:inline">{t.hint}</span>
       </div>
 
       {/* Carousel */}
       <div
-        className="relative mt-8 flex flex-1 flex-col justify-center lg:justify-end"
+        className="relative"
         role="region"
         aria-roledescription={t.carouselRole}
         aria-label={t.carouselLabel}
@@ -221,8 +198,7 @@ export function HeroCarousel({ slides, locale, dict }: { slides: Slide[]; locale
             <article
               key={slide.slug}
               data-slide={i}
-              data-hero-intro
-              className="w-[min(82vw,64svh)] shrink-0 md:w-[min(62vw,64svh)] lg:w-[min(54vw,68svh)]"
+              className="w-[82vw] shrink-0 md:w-[62vw] lg:w-[54vw]"
               aria-roledescription="slide"
               aria-label={format(t.slideOf, { i: i + 1, n: total })}
             >
@@ -246,7 +222,6 @@ export function HeroCarousel({ slides, locale, dict }: { slides: Slide[]; locale
                     src={slide.cover.src}
                     alt=""
                     fill
-                    priority={i === 0}
                     sizes="(min-width: 1024px) 54vw, (min-width: 768px) 62vw, 82vw"
                     className="pointer-events-none object-cover transition-transform duration-[900ms] ease-out group-hover/slide:scale-[1.04]"
                     draggable={false}
@@ -273,7 +248,7 @@ export function HeroCarousel({ slides, locale, dict }: { slides: Slide[]; locale
         </div>
 
         {/* Controls */}
-        <div data-hero-intro data-hero-meta className="mt-8 flex items-center justify-between gap-6 px-site pb-6">
+        <div data-carousel-meta className="mt-8 flex items-center justify-between gap-6 px-site pb-6">
           <div className="flex items-center gap-4">
             <span className="text-meta tabular-nums" aria-live="polite">
               {String(active + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
@@ -284,7 +259,6 @@ export function HeroCarousel({ slides, locale, dict }: { slides: Slide[]; locale
                 style={{ transform: `scaleX(${(active + 1) / total})` }}
               />
             </span>
-            <span className="text-meta hidden text-fg-muted lg:inline">{t.hint}</span>
           </div>
           <div className="flex gap-2">
             <button

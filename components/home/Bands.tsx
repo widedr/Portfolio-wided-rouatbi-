@@ -11,7 +11,7 @@ export function Bands({ dict }: { dict: Dictionary }) {
         {clients.map((c) => (
           <span
             key={c}
-            className="font-display px-8 text-[clamp(2rem,5vw,4.5rem)] font-[340] italic tracking-[-0.02em] text-fg-muted transition-colors duration-300 hover:text-fg"
+            className="font-display px-8 text-[clamp(2rem,5vw,4.5rem)] font-medium uppercase tracking-[-0.03em] text-fg-muted transition-colors duration-300 hover:text-fg"
           >
             {c}
           </span>

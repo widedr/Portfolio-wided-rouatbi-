@@ -12,7 +12,7 @@ export function Intro({ dict, locale }: { dict: Dictionary; locale: Locale }) {
     <section className="theme-paper py-section px-site" aria-labelledby="intro-label">
       <div className="grid-site gap-y-12">
         <p id="intro-label" className="text-meta col-span-4 md:col-span-6 lg:col-span-12">
-          01 — {dict.intro.label}
+          02 — {dict.intro.label}
         </p>
 
         <div className="col-span-4 md:col-span-6 lg:col-span-8">

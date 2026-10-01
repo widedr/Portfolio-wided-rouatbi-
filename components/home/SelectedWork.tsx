@@ -22,7 +22,7 @@ export function SelectedWork({ dict, locale }: { dict: Dictionary; locale: Local
     <section className="py-section px-site" aria-labelledby="work-title">
       <div className="mb-20 flex flex-wrap items-end justify-between gap-8">
         <div>
-          <p className="text-meta mb-6 text-fg-muted">02 — {dict.work.label}</p>
+          <p className="text-meta mb-6 text-fg-muted">03 — {dict.work.label}</p>
           <RevealText id="work-title" className="text-display-l">
             {dict.work.title} <em className="text-accent">{dict.work.titleEm}</em>
           </RevealText>
