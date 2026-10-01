@@ -34,7 +34,7 @@ export const en: typeof fr = {
   hero: {
     name: "Wided Rouatbi",
     role: "Senior Product Designer",
-    lines: ["UX/UI", "Product", "Designer"],
+    roles: ["UX/UI Designer", "Product Designer", "AI-Augmented Designer"],
     lead: "I make complex business products legible,",
     leadEm: "with AI in my process.",
     cta: "See my work",

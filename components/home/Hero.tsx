@@ -10,7 +10,8 @@ import { HeroMedia } from "./HeroMedia";
 
 /**
  * Full-screen hero over a background video (or project visuals until one is
- * provided), centred: three oversized lines, one sentence, one call to action.
+ * provided), centred: the name always visible, a role line that rotates
+ * (UX/UI · Product · AI-Augmented Designer), one sentence, one call to action.
  * Lines rise from their masks after the loader, then the rest fades in.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
@@ -28,6 +29,19 @@ export function Hero({ dict }: { dict: Dictionary }) {
           .timeline({ paused: true })
           .from("[data-line]", { yPercent: 110, duration: duration.long, ease: ease.out, stagger: stagger.lines + 0.02 })
           .from("[data-fade]", { opacity: 0, y: 20, duration: duration.base, ease: ease.out, stagger: stagger.items }, "-=0.7");
+
+        // Role line: each title rolls up and the next one comes in from below.
+        const roles = gsap.utils.toArray<HTMLElement>("[data-role]");
+        gsap.set(roles.slice(1), { y: 0, yPercent: 110 });
+        const cycle = gsap.timeline({ repeat: -1, paused: true });
+        roles.forEach((role, i) => {
+          const next = roles[(i + 1) % roles.length];
+          cycle
+            .to(role, { yPercent: -110, duration: 0.7, ease: ease.inOut }, "+=1.8")
+            .fromTo(next, { yPercent: 110 }, { yPercent: 0, duration: 0.7, ease: ease.inOut, immediateRender: false }, "<");
+        });
+        tl.add(() => cycle.play());
+
         const off = whenLoaderDone(() => tl.play());
         return off;
       });
@@ -47,20 +61,28 @@ export function Hero({ dict }: { dict: Dictionary }) {
       <HeroMedia />
 
       <div className="relative flex flex-col items-center">
-        <p data-fade data-hero-intro className="text-meta mb-8 text-fg-muted">
-          {t.name} — {t.role}
-        </p>
-
-        <h1 className="text-display-xl text-[clamp(3.5rem,14vw,9.5rem)] uppercase">
-          <span className="sr-only">{t.name} — </span>
-          {t.lines.map((line, i) => (
-            <span key={line} className="block overflow-hidden pb-[0.04em]">
-              <span data-line data-hero-intro className={`block ${i === 1 ? "text-accent" : ""}`}>
-                {line}
+        <h1 className="text-display-xl text-[clamp(3.5rem,13vw,9.5rem)] uppercase">
+          {t.name.split(" ").map((word) => (
+            <span key={word} className="inline-block overflow-hidden px-[0.12em] pb-[0.04em] align-top">
+              <span data-line data-hero-intro className="block">
+                {word}
               </span>
             </span>
           ))}
         </h1>
+
+        {/* Rotating role: decorative; the full list is read once by assistive tech */}
+        <p data-fade data-hero-intro className="mt-4 font-display text-[clamp(1.75rem,5.5vw,4.5rem)] font-medium leading-none tracking-[-0.03em] text-accent">
+          <span className="sr-only">{t.roles.join(", ")}</span>
+          <span className="grid overflow-hidden pb-[0.08em]" aria-hidden="true">
+            {t.roles.map((role, i) => (
+              // Only the first role shows until JS takes over (also the reduced-motion state).
+              <span key={role} data-role className="col-start-1 row-start-1 block" style={i ? { transform: "translateY(110%)" } : undefined}>
+                {role}
+              </span>
+            ))}
+          </span>
+        </p>
 
         <p data-fade data-hero-intro className="text-body-l mt-10 max-w-[38ch]">
           {t.lead} <em className="text-accent">{t.leadEm}</em>

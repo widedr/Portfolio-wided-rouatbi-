@@ -32,7 +32,7 @@ export const fr = {
   hero: {
     name: "Wided Rouatbi",
     role: "Senior Product Designer",
-    lines: ["UX/UI", "Product", "Designer"],
+    roles: ["UX/UI Designer", "Product Designer", "AI-Augmented Designer"],
     lead: "Je rends lisibles les produits métier complexes,",
     leadEm: "avec l'IA dans mon process.",
     cta: "Voir mes projets",
