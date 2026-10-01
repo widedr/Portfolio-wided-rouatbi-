@@ -6,9 +6,11 @@ import { duration, ease, gsap, mq, stagger, useGSAP, whenLoaderDone } from "@/li
 import { Magnetic } from "@/components/motion/Magnetic";
 import { ArrowSwap } from "@/components/layout/RollText";
 import { scrollToTarget, useLenis } from "@/components/layout/SmoothScroll";
+import { HeroMedia } from "./HeroMedia";
 
 /**
- * Typographic hero: three oversized lines, one sentence, one call to action.
+ * Full-screen hero over a background video (or project visuals until one is
+ * provided), centred: three oversized lines, one sentence, one call to action.
  * Lines rise from their masks after the loader, then the rest fades in.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
@@ -38,38 +40,33 @@ export function Hero({ dict }: { dict: Dictionary }) {
   );
 
   return (
-    <section ref={root} className="relative flex min-h-[100svh] flex-col justify-end px-site pb-8 pt-[var(--header-h)]">
-      <h1 className="text-display-xl text-[clamp(4rem,17vw,12rem)] uppercase">
-        <span className="sr-only">{t.name} — </span>
-        {t.lines.map((line, i) => (
-          <span key={line} className="block overflow-hidden pb-[0.04em]">
-            <span data-line data-hero-intro className="block">
-              <span
-                className={`block transition-transform duration-700 ease-out hover:translate-x-3 ${
-                  i === 1 ? "text-accent" : ""
-                }`}
-              >
+    <section
+      ref={root}
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-site pb-24 pt-[var(--header-h)] text-center"
+    >
+      <HeroMedia />
+
+      <div className="relative flex flex-col items-center">
+        <p data-fade data-hero-intro className="text-meta mb-8 text-fg-muted">
+          {t.name} — {t.role}
+        </p>
+
+        <h1 className="text-display-xl text-[clamp(3.5rem,14vw,9.5rem)] uppercase">
+          <span className="sr-only">{t.name} — </span>
+          {t.lines.map((line, i) => (
+            <span key={line} className="block overflow-hidden pb-[0.04em]">
+              <span data-line data-hero-intro className={`block ${i === 1 ? "text-accent" : ""}`}>
                 {line}
               </span>
             </span>
-          </span>
-        ))}
-      </h1>
+          ))}
+        </h1>
 
-      <div className="mt-10 grid gap-8 border-t border-line pt-8 md:grid-cols-12 md:gap-[var(--gutter)]">
-        <p data-fade data-hero-intro className="text-body-l max-w-[34ch] md:col-span-6 lg:col-span-5">
+        <p data-fade data-hero-intro className="text-body-l mt-10 max-w-[38ch]">
           {t.lead} <em className="text-accent">{t.leadEm}</em>
         </p>
 
-        <div data-fade data-hero-intro className="text-meta flex flex-col gap-2 text-fg-muted md:col-span-3 lg:col-span-4">
-          <span>{t.based}</span>
-          <span className="flex items-center gap-3">
-            <span className="pulse-dot relative inline-block size-2 rounded-full bg-[#4ade80]" aria-hidden="true" />
-            {t.relocation}
-          </span>
-        </div>
-
-        <div data-fade data-hero-intro className="flex items-start md:col-span-3 md:justify-end">
+        <div data-fade data-hero-intro className="mt-10">
           <Magnetic>
             <a
               href="#featured"
@@ -88,12 +85,24 @@ export function Hero({ dict }: { dict: Dictionary }) {
         </div>
       </div>
 
-      <p data-fade data-hero-intro className="text-meta mt-8 flex items-center gap-3 text-fg-muted">
-        {t.scroll}
-        <span className="scroll-cue inline-block" aria-hidden="true">
-          ↓
+      {/* Bottom bar: location · scroll · availability */}
+      <div
+        data-fade
+        data-hero-intro
+        className="text-meta absolute inset-x-0 bottom-6 grid grid-cols-1 gap-2 px-site text-fg-muted md:grid-cols-3"
+      >
+        <span className="hidden text-left md:block">{t.based}</span>
+        <span className="flex items-center justify-center gap-3">
+          {t.scroll}
+          <span className="scroll-cue inline-block" aria-hidden="true">
+            ↓
+          </span>
         </span>
-      </p>
+        <span className="hidden items-center justify-end gap-3 md:flex">
+          <span className="pulse-dot relative inline-block size-2 rounded-full bg-[#4ade80]" aria-hidden="true" />
+          {t.relocation}
+        </span>
+      </div>
     </section>
   );
 }
