@@ -9,8 +9,8 @@ type Polymorphic<T extends ElementType> = { as?: T; children: ReactNode; classNa
 >;
 
 /**
- * Headings: split into lines, each line rises from a mask when the element
- * reaches 85% of the viewport. Plays once. Hidden state is applied by JS only,
+ * Headings: rise from a mask when the element reaches 85% of the viewport —
+ * letter by letter for <HoverText> titles, line by line otherwise. Plays once. Hidden state is applied by JS only,
  * so content stays visible without JavaScript or with reduced motion.
  */
 export function RevealText<T extends ElementType = "h2">({ as, children, className, delay = 0, ...rest }: Polymorphic<T>) {
@@ -21,19 +21,19 @@ export function RevealText<T extends ElementType = "h2">({ as, children, classNa
     () => {
       const mm = gsap.matchMedia();
       mm.add(mq.motion, () => {
+        const scrollTrigger = { trigger: ref.current, start: "top 85%", once: true };
+        // Titles built with <HoverText>: letters rise one by one from their masks.
+        const letters = ref.current!.querySelectorAll("[data-top]");
+        if (letters.length) {
+          gsap.from(letters, { yPercent: 110, duration: duration.base, ease: ease.out, stagger: 0.012, delay, scrollTrigger });
+          return;
+        }
         const split = SplitText.create(ref.current!, {
           type: "lines",
           mask: "lines",
           autoSplit: true,
           onSplit: (self) =>
-            gsap.from(self.lines, {
-              yPercent: 110,
-              duration: duration.base,
-              ease: ease.out,
-              stagger: stagger.lines,
-              delay,
-              scrollTrigger: { trigger: ref.current, start: "top 85%", once: true },
-            }),
+            gsap.from(self.lines, { yPercent: 110, duration: duration.base, ease: ease.out, stagger: stagger.lines, delay, scrollTrigger }),
         });
         return () => split.revert();
       });

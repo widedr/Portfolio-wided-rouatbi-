@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef } from "react";
 import { gsap, mq, useGSAP } from "@/lib/motion";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Persona = { role: string; situation: string; outcome: string; image?: string };
 
@@ -44,7 +45,7 @@ export function Personas({ title, note, personas }: { title: string; note: strin
         <div>
           <p className="text-meta mb-6">04</p>
           <h2 id="personas-title" className="text-display-l">
-            {title}
+            <HoverText text={title} />
           </h2>
         </div>
         <p className="text-meta max-w-xs text-ink-muted">{note}</p>

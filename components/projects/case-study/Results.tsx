@@ -1,5 +1,6 @@
 import { CountUp } from "@/components/motion/CountUp";
 import { Reveal, RevealText } from "@/components/motion/Reveal";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Props = {
   title: string;
@@ -16,7 +17,7 @@ export function Results({ title, learningsTitle, statement, metrics, quotes, lea
     <section id="results" className="theme-paper py-section px-site" aria-labelledby="results-title">
       <p className="text-meta mb-6">07</p>
       <RevealText id="results-title" className="text-display-l mb-16">
-        {title}
+        <HoverText text={title} />
       </RevealText>
 
       {metrics && metrics.length > 0 && (

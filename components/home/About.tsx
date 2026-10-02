@@ -8,6 +8,7 @@ import { CountUp } from "@/components/motion/CountUp";
 import { Reveal, RevealText } from "@/components/motion/Reveal";
 import { ArrowSwap } from "@/components/layout/RollText";
 import { Portrait } from "./Portrait";
+import { HoverText } from "@/components/motion/HoverText";
 
 /**
  * About me, kept to roughly one screen: portrait and identity details on the
@@ -60,8 +61,7 @@ export function About({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         <div className="order-1 col-span-4 md:order-none md:col-span-4 lg:col-span-7 lg:col-start-6">
           <p className="text-meta mb-6">02 — {a.label}</p>
           <RevealText id="about-title" className="text-h2 max-w-[24ch]">
-            {about.leadPrefix[locale]}
-            <span className="text-accent-ink">{about.leadHighlight[locale]}</span>
+            <HoverText text={about.leadPrefix[locale].trim()} accent={about.leadHighlight[locale]} />
           </RevealText>
 
           <Reveal as="p" className="measure mt-8 text-ink-muted">

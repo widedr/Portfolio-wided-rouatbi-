@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { duration, ease, gsap, mq, stagger, useGSAP } from "@/lib/motion";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Step = { step: string; text: string };
 
@@ -54,7 +55,7 @@ export function Process({ title, steps, aiLabel, aiMethod, aiMakingOf, sliderLab
     <section ref={root} id="process" className="py-section px-site" aria-labelledby="process-title">
       <p className="text-meta mb-6 text-fg-muted">05</p>
       <h2 id="process-title" className="text-display-l mb-16">
-        {title}
+        <HoverText text={title} />
       </h2>
 
       <div data-timeline className="relative">

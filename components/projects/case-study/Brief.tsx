@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { ArrowSwap } from "@/components/layout/RollText";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Item = { label: string; value: string };
 
@@ -9,7 +10,7 @@ export function Brief({ title, items, live }: { title: string; items: Item[]; li
   return (
     <section id="brief" className="py-section px-site" aria-labelledby="brief-title">
       <h2 id="brief-title" className="text-meta mb-10 text-fg-muted">
-        {title}
+        <HoverText text={title} />
       </h2>
       <Reveal as="dl" selector="[data-item]" className="grid grid-cols-2 gap-x-[var(--gutter)] gap-y-10 md:grid-cols-3 lg:grid-flow-col lg:auto-cols-fr lg:grid-cols-none">
         {items.map((item) => (

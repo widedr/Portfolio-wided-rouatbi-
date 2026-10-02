@@ -19,7 +19,18 @@ const WAVE_RADIUS = 110; // px around the pointer that thickens
  * The trigger is the closest link/button (or the text itself). Keyboard focus
  * plays the roll too. Touch and reduced-motion get plain text.
  */
-export function HoverText({ text, as, className }: { text: string; as?: ElementType; className?: string }) {
+export function HoverText({
+  text,
+  accent,
+  as,
+  className,
+}: {
+  text: string;
+  /** Optional trailing part shown in the accent colour (e.g. "rendus simples."). */
+  accent?: string;
+  as?: ElementType;
+  className?: string;
+}) {
   const Tag = (as ?? "span") as ElementType;
   const root = useRef<HTMLElement>(null);
 
@@ -115,16 +126,19 @@ export function HoverText({ text, as, className }: { text: string; as?: ElementT
       };
     });
     return () => mm.revert();
-  }, [text]);
+  }, [text, accent]);
 
   return (
     <Tag ref={root} className={cx("inline-block", className)}>
-      <span className="sr-only">{text}</span>
+      <span className="sr-only">{accent ? `${text} ${accent}` : text}</span>
       <span aria-hidden="true">
-        {text.split(" ").map((word, w, words) => (
+        {[
+          ...text.split(" ").filter(Boolean).map((word) => ({ word, accent: false })),
+          ...(accent ?? "").split(" ").filter(Boolean).map((word) => ({ word, accent: true })),
+        ].map(({ word, accent: isAccent }, w, words) => (
           // Words stay unbreakable; lines can only wrap at the spaces between them.
           <span key={w}>
-            <span className="inline-block whitespace-nowrap">
+            <span className={cx("inline-block whitespace-nowrap", isAccent && "text-accent")}>
               {[...word].map((ch, i) => (
                 <span
                   key={i}

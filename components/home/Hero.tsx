@@ -7,6 +7,7 @@ import { Magnetic } from "@/components/motion/Magnetic";
 import { ArrowSwap } from "@/components/layout/RollText";
 import { scrollToTarget, useLenis } from "@/components/layout/SmoothScroll";
 import { HeroMedia } from "./HeroMedia";
+import { HoverText } from "@/components/motion/HoverText";
 
 /**
  * Full-screen hero over a background video (or project visuals until one is
@@ -65,7 +66,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
           {t.name.split(" ").map((word) => (
             <span key={word} className="inline-block overflow-hidden px-[0.12em] pb-[0.04em] align-top">
               <span data-line data-hero-intro className="block">
-                {word}
+                <HoverText text={word} />
               </span>
             </span>
           ))}

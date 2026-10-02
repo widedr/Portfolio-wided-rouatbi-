@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { duration, ease, Flip, gsap, mq, prefersReducedMotion, useGSAP } from "@/lib/motion";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Screen = { src: string; width: number; height: number; alt: string; title: string; decision: string };
 
@@ -57,7 +58,7 @@ export function Screens({ screens, labels, zoomCursor }: { screens: Screen[]; la
     <section ref={root} id="screens" className="py-section px-site" aria-labelledby="screens-title">
       <p className="text-meta mb-6 text-fg-muted">06</p>
       <h2 id="screens-title" className="text-display-l mb-12">
-        {labels.title}
+        <HoverText text={labels.title} />
       </h2>
 
       <div role="tablist" aria-label={labels.title} className="mb-8 flex flex-wrap gap-x-6 gap-y-2 border-b border-line">

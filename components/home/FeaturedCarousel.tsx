@@ -6,8 +6,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { format, href } from "@/lib/i18n";
 import type { Project } from "@/lib/projects";
-import { Draggable, duration, ease, gsap, mq, prefersReducedMotion, SplitText, stagger, useGSAP } from "@/lib/motion";
+import { Draggable, duration, ease, gsap, mq, prefersReducedMotion, stagger, useGSAP } from "@/lib/motion";
 import { ArrowSwap } from "@/components/layout/RollText";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Slide = Pick<Project, "slug" | "title" | "tagline" | "sector" | "year" | "role" | "employer" | "cover" | "theme">;
 
@@ -144,19 +145,15 @@ export function FeaturedCarousel({ slides, locale, dict }: { slides: Slide[]; lo
       return;
     }
     if (prefersReducedMotion()) return;
-    const title = root.current?.querySelector(`[data-slide="${active}"] [data-slide-title]`);
-    if (!title) return;
-    const split = SplitText.create(title, { type: "chars", mask: "chars" });
-    const tween = gsap.from(split.chars, {
-      yPercent: 100,
-      duration: duration.short + 0.2,
-      ease: ease.out,
-      stagger: stagger.chars,
-      onComplete: () => split.revert(),
-    });
+    const letters = root.current?.querySelectorAll(`[data-slide="${active}"] [data-slide-title] [data-top]`);
+    if (!letters?.length) return;
+    const tween = gsap.fromTo(
+      letters,
+      { yPercent: 100 },
+      { yPercent: 0, duration: duration.short + 0.2, ease: ease.out, stagger: stagger.chars },
+    );
     return () => {
       tween.kill();
-      split.revert();
     };
   }, [active]);
 
@@ -174,7 +171,7 @@ export function FeaturedCarousel({ slides, locale, dict }: { slides: Slide[]; lo
     <section ref={root} id="featured" className="relative overflow-hidden py-section" aria-labelledby="featured-title">
       <div className="mb-12 flex items-end justify-between gap-6 px-site">
         <h2 id="featured-title" className="text-meta text-fg-muted">
-          01 — {t.carouselLabel}
+          <HoverText text={`01 — ${t.carouselLabel}`} />
         </h2>
         <span className="text-meta hidden text-fg-muted lg:inline">{t.hint}</span>
       </div>
@@ -232,7 +229,7 @@ export function FeaturedCarousel({ slides, locale, dict }: { slides: Slide[]; lo
                     data-slide-title
                     className="text-display-l transition-transform duration-500 ease-out group-hover/slide:translate-x-2"
                   >
-                    {slide.title}
+                    <HoverText text={slide.title} />
                   </h2>
                   <p className="text-meta pb-2 text-fg-muted">
                     {slide.year ?? slide.employer} · {slide.role.split("&")[0].trim()}

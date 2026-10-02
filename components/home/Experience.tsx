@@ -21,7 +21,7 @@ export function Experience({ dict, locale }: { dict: Dictionary; locale: Locale 
         <div>
           <p className="text-meta mb-6 text-fg-muted">03 — {t.label}</p>
           <RevealText id="experience-title" className="text-h2 max-w-[22ch]">
-            {t.title} <em className="text-accent">{t.titleEm}</em>
+            <HoverText text={t.title} accent={t.titleEm} />
           </RevealText>
         </div>
       </div>
@@ -53,8 +53,8 @@ export function Experience({ dict, locale }: { dict: Dictionary; locale: Locale 
                   data-cursor="link"
                 >
                   <span className="flex flex-col gap-2">
-                    <span className="flex items-center gap-3 text-xl font-medium transition-[color,transform] duration-500 ease-out group-hover/row:translate-x-1 md:text-2xl">
-                      <HoverText text={job.company} />
+                    <span className="flex items-center gap-3 text-xl font-medium transition-[color,transform] duration-500 ease-out group-hover/row:translate-x-1 group-hover/row:text-accent md:text-2xl">
+                      {job.company}
                       {job.current && (
                         <>
                           <span className="pulse-dot relative inline-block size-2 rounded-full bg-accent" aria-hidden="true" />

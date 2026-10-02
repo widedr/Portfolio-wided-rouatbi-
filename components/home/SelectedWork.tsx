@@ -6,6 +6,7 @@ import { ProjectCard } from "@/components/projects/ProjectCard";
 import { RevealText } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { ArrowSwap } from "@/components/layout/RollText";
+import { HoverText } from "@/components/motion/HoverText";
 
 /* Magazine rhythm: varied widths, aspect ratios and vertical offsets. */
 const layout = [
@@ -24,7 +25,7 @@ export function SelectedWork({ dict, locale }: { dict: Dictionary; locale: Local
         <div>
           <p className="text-meta mb-6 text-fg-muted">04 — {dict.work.label}</p>
           <RevealText id="work-title" className="text-display-l">
-            {dict.work.title} <em className="text-accent">{dict.work.titleEm}</em>
+            <HoverText text={dict.work.title} accent={dict.work.titleEm} />
           </RevealText>
         </div>
       </div>

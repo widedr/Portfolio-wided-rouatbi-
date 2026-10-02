@@ -15,6 +15,7 @@ import { NextProject } from "@/components/projects/case-study/NextProject";
 import { ReadingProgress } from "@/components/projects/case-study/ReadingProgress";
 import { Reveal, RevealText } from "@/components/motion/Reveal";
 import { RevealImage } from "@/components/motion/RevealImage";
+import { HoverText } from "@/components/motion/HoverText";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => projects.map((p) => ({ locale, slug: p.slug })));
@@ -152,7 +153,7 @@ function Overview({ project, locale, title }: { project: Project; locale: Locale
         <p className="text-meta col-span-4 md:col-span-6 lg:col-span-3">{title}</p>
         <div className="col-span-4 md:col-span-6 lg:col-span-8 lg:col-start-5">
           <RevealText id="overview-title" className="text-h2">
-            {lead}
+            <HoverText text={lead} />
           </RevealText>
           <Reveal selector="p" className="measure mt-8 flex flex-col gap-6 text-body-l text-ink-muted">
             {rest.map((para) => (

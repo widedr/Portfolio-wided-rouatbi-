@@ -1,4 +1,5 @@
 import { Reveal, RevealText } from "@/components/motion/Reveal";
+import { HoverText } from "@/components/motion/HoverText";
 
 /** Signature section: the domain explained to someone who doesn't know it. */
 export function Context({
@@ -16,7 +17,7 @@ export function Context({
         <div className="col-span-4 md:col-span-6 lg:col-span-7">
           <p className="text-meta mb-6">01 — {title}</p>
           <RevealText id="context-title" className="text-h2 mb-10">
-            {paragraphs[0]}
+            <HoverText text={paragraphs[0]} />
           </RevealText>
           <Reveal selector="p" className="measure flex flex-col gap-6 text-body-l text-ink-muted">
             {paragraphs.slice(1).map((p) => (

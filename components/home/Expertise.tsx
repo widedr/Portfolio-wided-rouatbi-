@@ -49,7 +49,7 @@ export function Expertise({ dict }: { dict: Dictionary }) {
     <section ref={root} className="py-section px-site" aria-labelledby={`${id}-title`}>
       <p className="text-meta mb-6 text-fg-muted">05 — {dict.expertise.label}</p>
       <RevealText id={`${id}-title`} className="text-display-l mb-10 max-w-[16ch]">
-        {dict.expertise.title}
+        <HoverText text={dict.expertise.title} />
       </RevealText>
 
       <div data-list className="relative" onPointerLeave={() => setHovered(null)}>
@@ -101,7 +101,7 @@ export function Expertise({ dict }: { dict: Dictionary }) {
                   >
                     <span className="text-meta w-8 shrink-0 text-fg-muted">{String(i + 1).padStart(2, "0")}</span>
                     <span className="text-h2 flex-1 transition-transform duration-500 ease-out group-hover/row:translate-x-2">
-                      <HoverText text={item.title} />
+                      {item.title}
                     </span>
                     <span
                       aria-hidden="true"

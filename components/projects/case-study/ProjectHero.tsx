@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { duration, ease, gsap, mq, SplitText, stagger, useGSAP, whenLoaderDone } from "@/lib/motion";
+import { duration, ease, gsap, mq, stagger, useGSAP, whenLoaderDone } from "@/lib/motion";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Props = {
   title: string;
@@ -26,12 +27,11 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
       mm.add(mq.motion, () => {
         // Lift the CSS pre-hide first so `from` tweens record the visible state as their end.
         gsap.set("[data-hero-intro]", { opacity: 1 });
-        const split = SplitText.create("[data-title]", { type: "chars", mask: "chars" });
         const tl = gsap
           .timeline({ paused: true })
           .from("[data-visual]", { clipPath: "inset(100% 0% 0% 0%)", duration: duration.long, ease: ease.inOut })
           .from("[data-visual] img", { scale: 1.2, duration: duration.long * 1.3, ease: ease.out }, "<")
-          .from(split.chars, { yPercent: 110, duration: duration.base, ease: ease.out, stagger: stagger.chars }, "-=0.7")
+          .from("[data-title] [data-top]", { yPercent: 110, duration: duration.base, ease: ease.out, stagger: stagger.chars }, "-=0.7")
           .from("[data-sub]", { opacity: 0, y: 16, duration: duration.base, ease: ease.out, stagger: stagger.items }, "-=0.5");
         const off = whenLoaderDone(() => tl.play());
 
@@ -48,7 +48,6 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
         });
         return () => {
           off();
-          split.revert();
         };
       });
       mm.add(mq.reduced, () => {
@@ -71,7 +70,7 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
           {eyebrow}
         </p>
         <h1 data-title data-hero-intro className="text-display-xl">
-          {title}
+          <HoverText text={title} />
         </h1>
         <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
           <p data-sub data-hero-intro className="text-body-l max-w-[40ch]">

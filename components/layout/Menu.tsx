@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 import { duration, ease, gsap, prefersReducedMotion, stagger, useGSAP } from "@/lib/motion";
 import { LocalClock } from "./LocalClock";
 import { scrollToTarget, useLenis } from "./SmoothScroll";
-import { HoverText } from "@/components/motion/HoverText";
+import { RollText } from "./RollText";
 
 type Props = { open: boolean; onClose: () => void; locale: Locale; dict: Dictionary };
 
@@ -125,7 +125,7 @@ export function Menu({ open, onClose, locale, dict }: Props) {
                   >
                     <span className="text-meta w-8 shrink-0 text-fg-muted">{String(i + 1).padStart(2, "0")}</span>
                     <span className="text-display-l">
-                      <HoverText text={link.label} />
+                      <RollText>{link.label}</RollText>
                     </span>
                   </Link>
                 </div>

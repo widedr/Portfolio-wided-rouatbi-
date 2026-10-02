@@ -4,6 +4,7 @@ import { format, getDictionary, isLocale } from "@/lib/i18n";
 import { projects } from "@/lib/projects";
 import { ArchiveList } from "@/components/projects/ArchiveList";
 import { RevealText } from "@/components/motion/Reveal";
+import { HoverText } from "@/components/motion/HoverText";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/work">): Promise<Metadata> {
   const { locale } = await params;
@@ -33,7 +34,7 @@ export default async function WorkPage({ params }: PageProps<"/[locale]/work">) 
         <div>
           <p className="text-meta mb-6 text-fg-muted">{dict.workPage.label}</p>
           <RevealText as="h1" className="text-display-xl">
-            {dict.workPage.title}
+            <HoverText text={dict.workPage.title} />
           </RevealText>
         </div>
         <div className="max-w-md">
