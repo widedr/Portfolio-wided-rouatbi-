@@ -7,6 +7,7 @@
 :root {
   --bg: #0f0f0e;
   --bg-alt: #f2efe9;
+  --bg-raised: #181816;
   --fg: #f2efe9;
   --fg-muted: rgb(242 239 233 / 0.62);
   --ink: #141412;
@@ -18,7 +19,7 @@
 
   --gutter: clamp(16px, 2vw, 32px);
   --margin: clamp(16px, 4vw, 64px);
-  --section: clamp(96px, 14vw, 192px);
+  --section: clamp(64px, 8vw, 128px);
   --header-h: 72px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -155,15 +156,24 @@ em {
 }
 
 /* Paper sections flip the palette */
+/* Alternate surface: a slightly lifted warm black that keeps the rhythm
+   between sections without breaking the dark mood. "ink" tokens map back to
+   light text here so paper-era components read correctly. */
 .theme-paper {
+  --ink: #f2efe9;
+  --ink-muted: rgb(242 239 233 / 0.62);
+  --line-ink: rgb(242 239 233 / 0.14);
+  --accent-ink: var(--accent);
   --fg: var(--ink);
   --fg-muted: var(--ink-muted);
   --line: var(--line-ink);
-  background: var(--bg-alt);
+  background: var(--bg-raised);
   color: var(--ink);
 }
-.theme-paper ::selection {
-  color: var(--ink);
+.theme-paper ::selection,
+.theme-paper .btn-fill:hover,
+.theme-paper .btn-fill:focus-visible {
+  color: #141412;
 }
 
 /* Skip link */

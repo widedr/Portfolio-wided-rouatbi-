@@ -18,7 +18,7 @@ export function NextProject({ href, title, tagline, cover, label, cursor, back }
     <section className="relative" aria-label={label}>
       <Link
         href={href}
-        className="group/next relative flex min-h-[90svh] flex-col justify-end overflow-hidden px-site pb-12 text-[#f2efe9]"
+        className="group/next relative flex min-h-[70svh] flex-col justify-end overflow-hidden px-site pb-12 text-[#f2efe9]"
         data-cursor="next"
         data-cursor-label={cursor}
       >
