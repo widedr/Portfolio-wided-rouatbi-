@@ -55,7 +55,7 @@ export function Footer({ dict }: { dict: Dictionary }) {
         data-cursor="link"
         aria-label={`${dict.footer.cta} — ${site.email}`}
       >
-        <span className="text-display-xl block" aria-hidden="true">
+        <span className="text-display-xl block text-[clamp(2.75rem,8vw,10rem)] md:whitespace-nowrap" aria-hidden="true">
           {ctaChars.map((char, i) => (
             <span
               key={i}
@@ -145,13 +145,13 @@ export function Footer({ dict }: { dict: Dictionary }) {
       </div>
 
       <p data-name className="mt-section flex select-none justify-between overflow-hidden leading-[0.8]" aria-hidden="true">
-        {[..."ROUATBI"].map((c, i) => (
+        {[..."ROUATBI WIDED"].map((c, i) => (
           <span
             key={i}
             data-name-char
-            className="inline-block font-display text-[clamp(4rem,23vw,26rem)] font-medium tracking-[-0.04em]"
+            className="inline-block font-display text-[clamp(2rem,12.5vw,15rem)] font-medium tracking-[-0.04em]"
           >
-            {c}
+            {c === " " ? "\u00a0" : c}
           </span>
         ))}
       </p>

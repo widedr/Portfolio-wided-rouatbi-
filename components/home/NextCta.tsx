@@ -38,7 +38,7 @@ export function NextCta({ dict, locale }: { dict: Dictionary; locale: Locale }) 
         data-cursor="view"
         data-cursor-label={dict.cursor.open}
       >
-        <span className="text-display-xl block max-w-[12ch] transition-transform duration-700 ease-out group-hover/next:translate-x-3">
+        <span className="text-display-xl block text-[clamp(2.75rem,6.6vw,9rem)] md:whitespace-nowrap transition-transform duration-700 ease-out group-hover/next:translate-x-3">
           {dict.next.title}
         </span>
         <span className="text-meta mt-8 inline-flex items-center gap-3">
