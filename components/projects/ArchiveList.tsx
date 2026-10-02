@@ -7,6 +7,7 @@ import type { Dictionary, Locale } from "@/lib/i18n";
 import { href } from "@/lib/i18n";
 import type { Project } from "@/lib/projects";
 import { gsap, mq, stagger, duration, ease, useGSAP } from "@/lib/motion";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Row = Pick<Project, "slug" | "title" | "sector" | "employer" | "duration" | "cover"> & { hasCaseStudy: boolean };
 
@@ -116,7 +117,7 @@ export function ArchiveList({ rows, locale, dict }: { rows: Row[]; locale: Local
                       <Image src={row.cover.src} alt="" fill sizes="56px" className="object-cover" />
                     </span>
                     <span className="text-h2 transition-transform duration-500 ease-out group-hover/row:translate-x-2">
-                      {row.title}
+                      <HoverText text={row.title} />
                     </span>
                     {row.hasCaseStudy && (
                       <span className="text-meta hidden rounded-full border border-current px-3 py-1 sm:inline">

@@ -4,6 +4,7 @@ import { href } from "@/lib/i18n";
 import type { Project } from "@/lib/projects";
 import { cx } from "@/lib/cx";
 import { RevealImage } from "@/components/motion/RevealImage";
+import { HoverText } from "@/components/motion/HoverText";
 
 type Props = {
   project: Project;
@@ -39,7 +40,7 @@ export function ProjectCard({ project, locale, dict, aspect = "aspect-[16/10]", 
         </div>
         <div className="mt-5 flex items-baseline justify-between gap-4">
           <h3 className="text-h2 transition-transform duration-500 ease-out group-hover/card:translate-x-2">
-            {project.title}
+            <HoverText text={project.title} />
           </h3>
           {index !== undefined && (
             <span className="text-meta text-fg-muted">{String(index).padStart(2, "0")}</span>

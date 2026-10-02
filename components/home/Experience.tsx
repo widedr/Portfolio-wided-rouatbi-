@@ -4,6 +4,7 @@ import { useId, useState } from "react";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { experiences } from "@/lib/content/about";
 import { Reveal, RevealText } from "@/components/motion/Reveal";
+import { HoverText } from "@/components/motion/HoverText";
 
 /**
  * Career as a compact list: company name, then period · role underneath.
@@ -52,8 +53,8 @@ export function Experience({ dict, locale }: { dict: Dictionary; locale: Locale 
                   data-cursor="link"
                 >
                   <span className="flex flex-col gap-2">
-                    <span className="flex items-center gap-3 text-xl font-medium transition-[color,transform] duration-500 ease-out group-hover/row:translate-x-1 group-hover/row:text-accent md:text-2xl">
-                      {job.company}
+                    <span className="flex items-center gap-3 text-xl font-medium transition-[color,transform] duration-500 ease-out group-hover/row:translate-x-1 md:text-2xl">
+                      <HoverText text={job.company} />
                       {job.current && (
                         <>
                           <span className="pulse-dot relative inline-block size-2 rounded-full bg-accent" aria-hidden="true" />

@@ -5,6 +5,7 @@ import { useId, useRef, useState } from "react";
 import type { Dictionary } from "@/lib/i18n";
 import { gsap, mq, useGSAP } from "@/lib/motion";
 import { RevealText } from "@/components/motion/Reveal";
+import { HoverText } from "@/components/motion/HoverText";
 
 /**
  * Accordion of five expertise blocks. Click/Enter opens a row (one at a time).
@@ -100,7 +101,7 @@ export function Expertise({ dict }: { dict: Dictionary }) {
                   >
                     <span className="text-meta w-8 shrink-0 text-fg-muted">{String(i + 1).padStart(2, "0")}</span>
                     <span className="text-h2 flex-1 transition-transform duration-500 ease-out group-hover/row:translate-x-2">
-                      {item.title}
+                      <HoverText text={item.title} />
                     </span>
                     <span
                       aria-hidden="true"
