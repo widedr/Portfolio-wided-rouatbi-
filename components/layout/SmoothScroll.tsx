@@ -50,9 +50,11 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  // New page starts at the top; triggers re-measure once the new layout is in.
+  // New page starts at the top (or at its #anchor); triggers re-measure once the new layout is in.
   useEffect(() => {
-    if (lenis) lenis.scrollTo(0, { immediate: true });
+    const anchor = window.location.hash ? document.querySelector<HTMLElement>(window.location.hash) : null;
+    if (lenis) lenis.scrollTo(anchor ?? 0, { immediate: true });
+    else if (anchor) anchor.scrollIntoView();
     else window.scrollTo(0, 0);
     const id = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(id);

@@ -31,7 +31,7 @@ export function NextCta({ dict, locale }: { dict: Dictionary; locale: Locale }) 
 
   return (
     <section ref={root} className="theme-paper relative flex min-h-[90svh] flex-col justify-between px-site py-16">
-      <p className="text-meta">05 — {dict.next.label}</p>
+      <p className="text-meta">06 — {dict.next.label}</p>
       <Link
         href={href(locale, "/work")}
         className="group/next arrow-trigger block py-12"

@@ -3,6 +3,7 @@ import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
+import { ChatWidget } from "@/components/layout/ChatWidget";
 import { Cursor } from "@/components/layout/Cursor";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
@@ -80,6 +81,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           <main id="main">{children}</main>
           <Footer dict={dict} />
         </SmoothScroll>
+        <ChatWidget dict={dict} locale={locale} />
         <Cursor />
         <PointerFill />
         <RouteAnnouncer prefix={dict.a11y.pageChanged} />

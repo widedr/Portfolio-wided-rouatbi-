@@ -3,7 +3,8 @@ import { getDictionary, isLocale } from "@/lib/i18n";
 import { featuredProjects } from "@/lib/projects";
 import { Hero } from "@/components/home/Hero";
 import { FeaturedCarousel } from "@/components/home/FeaturedCarousel";
-import { Intro } from "@/components/home/Intro";
+import { About } from "@/components/home/About";
+import { Experience } from "@/components/home/Experience";
 import { SelectedWork } from "@/components/home/SelectedWork";
 import { Bands } from "@/components/home/Bands";
 import { Expertise } from "@/components/home/Expertise";
@@ -30,7 +31,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       <Hero dict={dict} />
       <FeaturedCarousel slides={slides} locale={locale} dict={dict} />
-      <Intro dict={dict} locale={locale} />
+      <About dict={dict} locale={locale} />
+      <Experience dict={dict} locale={locale} />
       <SelectedWork dict={dict} locale={locale} />
       <Bands dict={dict} />
       <Expertise dict={dict} />

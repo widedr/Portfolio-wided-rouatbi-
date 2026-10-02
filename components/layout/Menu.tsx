@@ -21,6 +21,7 @@ export function Menu({ open, onClose, locale, dict }: Props) {
 
   const links = [
     { label: dict.nav.home, to: href(locale) },
+    { label: dict.nav.about, to: `${href(locale)}#about` },
     { label: dict.nav.work, to: href(locale, "/work") },
     { label: dict.nav.caseStudy, to: href(locale, "/work/mathis-bs") },
     { label: dict.nav.contact, to: "#contact" },
@@ -103,8 +104,10 @@ export function Menu({ open, onClose, locale, dict }: Props) {
       <nav aria-label={dict.nav.menuLabel}>
         <ul className="group/menu flex flex-col">
           {links.map((link, i) => {
-            const isHash = link.to.startsWith("#");
-            const current = !isHash && pathname === link.to;
+            const [path, hash] = link.to.split("#");
+            // Anchors on the current page scroll in place instead of navigating.
+            const samePageAnchor = Boolean(hash) && (path === "" || path === pathname);
+            const current = !hash && pathname === link.to;
             return (
               <li key={link.to} className="overflow-hidden">
                 <div data-menu-line>
@@ -112,10 +115,10 @@ export function Menu({ open, onClose, locale, dict }: Props) {
                     href={link.to}
                     aria-current={current ? "page" : undefined}
                     onClick={(e) => {
-                      if (!isHash) return;
+                      if (!samePageAnchor) return;
                       e.preventDefault();
                       onClose();
-                      requestAnimationFrame(() => scrollToTarget(lenis, link.to));
+                      requestAnimationFrame(() => scrollToTarget(lenis, `#${hash}`));
                     }}
                     className="roll-trigger flex items-baseline gap-4 py-1 transition-opacity duration-300 group-hover/menu:opacity-30 hover:!opacity-100 focus-visible:!opacity-100 md:gap-8"
                     data-cursor="link"

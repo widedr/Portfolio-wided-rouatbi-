@@ -46,7 +46,7 @@ export function Expertise({ dict }: { dict: Dictionary }) {
 
   return (
     <section ref={root} className="py-section px-site" aria-labelledby={`${id}-title`}>
-      <p className="text-meta mb-6 text-fg-muted">04 — {dict.expertise.label}</p>
+      <p className="text-meta mb-6 text-fg-muted">05 — {dict.expertise.label}</p>
       <RevealText id={`${id}-title`} className="text-display-l mb-16 max-w-[16ch]">
         {dict.expertise.title}
       </RevealText>

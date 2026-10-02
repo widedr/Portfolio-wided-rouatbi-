@@ -12,6 +12,7 @@ export const en: typeof fr = {
   },
   nav: {
     home: "Home",
+    about: "About",
     work: "Work",
     caseStudy: "Mathis BS case study",
     contact: "Contact",
@@ -53,6 +54,19 @@ export const en: typeof fr = {
     text: "I design complex business products and make them legible — from research to prototype, with AI as an accelerator.",
     cv: "Download my CV",
     portraitAlt: "Portrait of Wided Rouatbi",
+  },
+  about: {
+    label: "About",
+    education: "Education",
+    languages: "Languages",
+    sectors: "Sectors",
+    skills: "Skills",
+  },
+  experience: {
+    label: "Experience",
+    title: "Six years, six teams,",
+    titleEm: "one thread: make it clear.",
+    current: "Current role",
   },
   figures: {
     label: "In numbers",
@@ -112,6 +126,19 @@ export const en: typeof fr = {
     label: "What's next",
     title: "Explore the case studies",
     cta: "See the work",
+  },
+  chat: {
+    label: "AI assistant",
+    open: "Ask the AI assistant a question",
+    close: "Close the assistant",
+    intro: "Ask me anything about Wided's background, projects or expertise.",
+    suggestions: ["Tell me about Mathis BS", "What's her background?", "Why France?"],
+    placeholder: "Your question…",
+    send: "Send",
+    thinking: "The assistant is thinking…",
+    error: "Something went wrong. Try again or write to Wided directly.",
+    you: "You",
+    assistant: "Assistant",
   },
   footer: {
     cta: "Let's work together",

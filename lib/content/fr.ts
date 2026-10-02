@@ -10,6 +10,7 @@ export const fr = {
   },
   nav: {
     home: "Accueil",
+    about: "À propos",
     work: "Projets",
     caseStudy: "Étude de cas Mathis BS",
     contact: "Contact",
@@ -51,6 +52,19 @@ export const fr = {
     text: "Je conçois des produits métier complexes et je les rends lisibles — de la recherche au prototype, avec l'IA comme accélérateur.",
     cv: "Télécharger mon CV",
     portraitAlt: "Portrait de Wided Rouatbi",
+  },
+  about: {
+    label: "À propos",
+    education: "Formation",
+    languages: "Langues",
+    sectors: "Secteurs",
+    skills: "Compétences",
+  },
+  experience: {
+    label: "Parcours",
+    title: "Six ans, six équipes,",
+    titleEm: "un même fil : rendre clair.",
+    current: "Poste actuel",
   },
   figures: {
     label: "En chiffres",
@@ -110,6 +124,19 @@ export const fr = {
     label: "La suite",
     title: "Explorer les études de cas",
     cta: "Voir les projets",
+  },
+  chat: {
+    label: "Assistant IA",
+    open: "Poser une question à l'assistant IA",
+    close: "Fermer l'assistant",
+    intro: "Posez-moi une question sur le parcours, les projets ou l'expertise de Wided.",
+    suggestions: ["Parle-moi de Mathis BS", "Quel est son parcours ?", "Pourquoi la France ?"],
+    placeholder: "Votre question…",
+    send: "Envoyer",
+    thinking: "L'assistant réfléchit…",
+    error: "Une erreur est survenue. Réessayez ou écrivez directement à Wided.",
+    you: "Vous",
+    assistant: "Assistant",
   },
   footer: {
     cta: "Travaillons ensemble",

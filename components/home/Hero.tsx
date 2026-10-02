@@ -111,7 +111,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
       <div
         data-fade
         data-hero-intro
-        className="text-meta absolute inset-x-0 bottom-6 grid grid-cols-1 gap-2 px-site text-fg-muted md:grid-cols-3"
+        className="text-meta absolute inset-x-0 bottom-6 grid grid-cols-1 gap-2 px-site text-fg-muted md:grid-cols-3 md:pr-24"
       >
         <span className="hidden text-left md:block">{t.based}</span>
         <span className="flex items-center justify-center gap-3">
