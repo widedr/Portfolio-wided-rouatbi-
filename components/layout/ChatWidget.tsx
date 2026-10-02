@@ -206,7 +206,7 @@ export function ChatWidget({ dict, locale }: { dict: Dictionary; locale: Locale 
         aria-expanded={open}
         aria-controls="chat-panel"
         aria-label={open ? t.close : t.open}
-        className="group/chat fixed bottom-4 right-4 z-[70] grid size-14 place-items-center rounded-full bg-accent text-ink shadow-[0_8px_32px_rgb(255_77_148/0.35)] transition-transform duration-300 ease-out hover:scale-105 active:scale-95 md:bottom-6 md:right-6"
+        className="group/chat fixed bottom-4 right-4 z-[70] grid size-14 place-items-center rounded-full bg-accent text-ink shadow-[0_8px_32px_rgb(210_255_58/0.35)] transition-transform duration-300 ease-out hover:scale-105 active:scale-95 md:bottom-6 md:right-6"
         data-cursor="link"
       >
         <span className="transition-transform duration-500 ease-out group-hover/chat:rotate-90">

@@ -2,7 +2,7 @@
 
 /* ─────────────────────────────────────────────────────────────
    Design tokens — Wided Rouatbi
-   Warm black + paper, one pink accent.
+   Warm black, one neon lime accent.
    ───────────────────────────────────────────────────────────── */
 :root {
   --bg: #0f0f0e;
@@ -12,8 +12,8 @@
   --fg-muted: rgb(242 239 233 / 0.62);
   --ink: #141412;
   --ink-muted: rgb(20 20 18 / 0.64);
-  --accent: #ff4d94;
-  --accent-ink: #c2185b; /* accent darkened for text on paper (AA) */
+  --accent: #d2ff3a;
+  --accent-ink: #5a7000; /* accent darkened for text on paper (AA) */
   --line: rgb(242 239 233 / 0.16);
   --line-ink: rgb(20 20 18 / 0.14);
 
