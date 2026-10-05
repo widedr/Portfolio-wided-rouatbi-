@@ -4,17 +4,15 @@ import { useEffect, useRef, type ElementType } from "react";
 import { gsap, mq } from "@/lib/motion";
 import { cx } from "@/lib/cx";
 
-const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+=?/<>0123456789";
 const BASE_WEIGHT = 500;
 const MAX_WEIGHT = 800;
 const WAVE_RADIUS = 110; // px around the pointer that thickens
 
 /**
- * Title hover effect, all four layers at once:
+ * Title hover effect, three layers at once:
  *  1. letters roll up one by one (left → right stagger), a copy rises from below;
- *  2. the incoming copy scrambles through random glyphs before settling;
- *  3. a weight wave follows the pointer along the word (variable font);
- *  4. outgoing letters blur away, incoming ones arrive sharp in the accent colour.
+ *  2. a weight wave follows the pointer along the word (variable font);
+ *  3. outgoing letters blur away, incoming ones arrive sharp in the accent colour.
  *
  * The trigger is the closest link/button (or the text itself). Keyboard focus
  * plays the roll too. Touch and reduced-motion get plain text.
@@ -43,34 +41,11 @@ export function HoverText({
       const tops = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-top]"));
       const bottoms = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-bottom]"));
       const chars = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-char]"));
-      const finals = bottoms.map((b) => b.textContent ?? "");
-      let scrambles: gsap.core.Tween[] = [];
 
       gsap.set(bottoms, { yPercent: 105 });
       gsap.set(chars, { "--w": BASE_WEIGHT });
 
-      const scramble = () => {
-        scrambles.forEach((s) => s.kill());
-        scrambles = bottoms.map((b, i) => {
-          const final = finals[i];
-          const state = { p: 0 };
-          return gsap.to(state, {
-            p: 1,
-            duration: 0.45,
-            delay: i * 0.025,
-            ease: "none",
-            onUpdate: () => {
-              b.textContent = state.p < 0.85 ? GLYPHS[Math.floor(Math.random() * GLYPHS.length)] : final;
-            },
-            onComplete: () => {
-              b.textContent = final;
-            },
-          });
-        });
-      };
-
       const enter = () => {
-        scramble();
         gsap.to(tops, {
           yPercent: -105,
           filter: "blur(6px)",
@@ -92,8 +67,6 @@ export function HoverText({
       };
 
       const leave = () => {
-        scrambles.forEach((s) => s.kill());
-        bottoms.forEach((b, i) => (b.textContent = finals[i]));
         gsap.to(bottoms, { yPercent: 105, filter: "blur(6px)", opacity: 0, duration: 0.45, ease: "power3.inOut", stagger: 0.015, overwrite: true });
         gsap.to(tops, { yPercent: 0, filter: "blur(0px)", opacity: 1, duration: 0.45, ease: "power3.inOut", stagger: 0.015, overwrite: true });
         gsap.to(chars, { "--w": BASE_WEIGHT, duration: 0.5, ease: "power2.out", overwrite: "auto" });
@@ -114,13 +87,11 @@ export function HoverText({
       trigger.addEventListener("focus", enter);
       trigger.addEventListener("blur", leave);
       return () => {
-        scrambles.forEach((s) => s.kill());
         trigger.removeEventListener("pointerenter", enter);
         trigger.removeEventListener("pointerleave", leave);
         trigger.removeEventListener("pointermove", wave);
         trigger.removeEventListener("focus", enter);
         trigger.removeEventListener("blur", leave);
-        bottoms.forEach((b, i) => (b.textContent = finals[i]));
         gsap.set([...tops, ...bottoms], { clearProps: "transform,filter,opacity" });
         gsap.set(chars, { clearProps: "--w" });
       };
