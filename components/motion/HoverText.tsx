@@ -5,17 +5,14 @@ import { gsap, mq } from "@/lib/motion";
 import { cx } from "@/lib/cx";
 
 const BASE_WEIGHT = 500;
-const MAX_WEIGHT = 800;
-const WAVE_RADIUS = 110; // px around the pointer that thickens
+const MAX_WEIGHT = 900;
+const WAVE_RADIUS = 180; // px around the pointer that thickens
 
 /**
- * Title hover effect, three layers at once:
- *  1. letters roll up one by one (left → right stagger), a copy rises from below;
- *  2. a weight wave follows the pointer along the word (variable font);
- *  3. outgoing letters blur away, incoming ones arrive sharp in the accent colour.
- *
- * The trigger is the closest link/button (or the text itself). Keyboard focus
- * plays the roll too. Touch and reduced-motion get plain text.
+ * Title hover effect: a weight wave follows the pointer along the word
+ * (variable font), the letters nearest the cursor thickening the most.
+ * Each letter keeps a `[data-top]` span so reveal animations can lift it in.
+ * Touch and reduced-motion get plain text.
  */
 export function HoverText({
   text,
@@ -38,38 +35,11 @@ export function HoverText({
     const mm = gsap.matchMedia();
     mm.add(`${mq.motion} and ${mq.fine}`, () => {
       const trigger = (el.closest("a, button") as HTMLElement | null) ?? el;
-      const tops = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-top]"));
-      const bottoms = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-bottom]"));
       const chars = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-char]"));
-
-      gsap.set(bottoms, { yPercent: 105 });
       gsap.set(chars, { "--w": BASE_WEIGHT });
 
-      const enter = () => {
-        gsap.to(tops, {
-          yPercent: -105,
-          filter: "blur(6px)",
-          opacity: 0,
-          duration: 0.5,
-          ease: "power3.inOut",
-          stagger: 0.025,
-          overwrite: true,
-        });
-        gsap.to(bottoms, {
-          yPercent: 0,
-          filter: "blur(0px)",
-          opacity: 1,
-          duration: 0.5,
-          ease: "power3.inOut",
-          stagger: 0.025,
-          overwrite: true,
-        });
-      };
-
       const leave = () => {
-        gsap.to(bottoms, { yPercent: 105, filter: "blur(6px)", opacity: 0, duration: 0.45, ease: "power3.inOut", stagger: 0.015, overwrite: true });
-        gsap.to(tops, { yPercent: 0, filter: "blur(0px)", opacity: 1, duration: 0.45, ease: "power3.inOut", stagger: 0.015, overwrite: true });
-        gsap.to(chars, { "--w": BASE_WEIGHT, duration: 0.5, ease: "power2.out", overwrite: "auto" });
+        gsap.to(chars, { "--w": BASE_WEIGHT, duration: 0.6, ease: "power2.out", overwrite: "auto" });
       };
 
       const wave = (e: PointerEvent) => {
@@ -77,22 +47,15 @@ export function HoverText({
           const r = c.getBoundingClientRect();
           const d = Math.abs(e.clientX - (r.left + r.width / 2));
           const k = Math.max(0, 1 - d / WAVE_RADIUS);
-          gsap.to(c, { "--w": BASE_WEIGHT + (MAX_WEIGHT - BASE_WEIGHT) * k * k, duration: 0.3, ease: "power2.out", overwrite: "auto" });
+          gsap.to(c, { "--w": BASE_WEIGHT + (MAX_WEIGHT - BASE_WEIGHT) * k * k * (3 - 2 * k), duration: 0.35, ease: "power2.out", overwrite: "auto" });
         });
       };
 
-      trigger.addEventListener("pointerenter", enter);
       trigger.addEventListener("pointerleave", leave);
       trigger.addEventListener("pointermove", wave);
-      trigger.addEventListener("focus", enter);
-      trigger.addEventListener("blur", leave);
       return () => {
-        trigger.removeEventListener("pointerenter", enter);
         trigger.removeEventListener("pointerleave", leave);
         trigger.removeEventListener("pointermove", wave);
-        trigger.removeEventListener("focus", enter);
-        trigger.removeEventListener("blur", leave);
-        gsap.set([...tops, ...bottoms], { clearProps: "transform,filter,opacity" });
         gsap.set(chars, { clearProps: "--w" });
       };
     });
@@ -118,9 +81,6 @@ export function HoverText({
                   style={{ fontWeight: "var(--w, inherit)" as unknown as number }}
                 >
                   <span data-top className="inline-block">
-                    {ch}
-                  </span>
-                  <span data-bottom className="absolute left-0 top-0 inline-block text-accent opacity-0">
                     {ch}
                   </span>
                 </span>
