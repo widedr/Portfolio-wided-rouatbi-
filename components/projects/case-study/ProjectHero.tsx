@@ -74,7 +74,7 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
           {eyebrow}
         </p>
         <h1 data-title data-hero-intro className="text-display-xl">
-          <HoverText text={title} hover="bounce" />
+          <HoverText text={title} />
         </h1>
         <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
           <p data-sub data-hero-intro className="text-body-l max-w-[40ch]">

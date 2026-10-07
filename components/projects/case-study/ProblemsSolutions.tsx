@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { duration, ease, gsap, mq, useGSAP } from "@/lib/motion";
 import { HoverText } from "@/components/motion/HoverText";
+import { RevealText } from "@/components/motion/Reveal";
 
 type Problem = { id: string; title: string; text: string };
 type Solution = { title: string; text: string; solves: string[] };
@@ -63,9 +64,9 @@ export function ProblemsSolutions({ labels, problems, solutions }: Props) {
         <div className="grid-site">
           <div className="col-span-4 md:col-span-6 lg:col-span-4">
             <p className="text-meta mb-6 text-fg-muted">02</p>
-            <h2 id="problems-title" className="text-display-l lg:sticky lg:top-32">
+            <RevealText id="problems-title" className="text-display-l lg:sticky lg:top-32">
               <HoverText text={labels.problems} />
-            </h2>
+            </RevealText>
           </div>
           <ol data-problems className="relative col-span-4 mt-12 md:col-span-6 lg:col-span-7 lg:col-start-6 lg:mt-0">
             <span className="absolute left-0 top-0 h-full w-px bg-line" aria-hidden="true">
@@ -100,9 +101,9 @@ export function ProblemsSolutions({ labels, problems, solutions }: Props) {
 
       <section id="solutions" className="py-section px-site" aria-labelledby="solutions-title">
         <p className="text-meta mb-6 text-fg-muted">03</p>
-        <h2 id="solutions-title" className="text-display-l mb-16">
+        <RevealText id="solutions-title" className="text-display-l mb-16">
           <HoverText text={labels.solutions} />
-        </h2>
+        </RevealText>
         <ol className="grid gap-x-[var(--gutter)] gap-y-16 md:grid-cols-2">
           {solutions.map((s, i) => (
             <li

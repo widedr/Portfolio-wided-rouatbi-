@@ -33,8 +33,8 @@ export default async function WorkPage({ params }: PageProps<"/[locale]/work">) 
       <div className="mb-20 flex flex-wrap items-end justify-between gap-8">
         <div>
           <p className="text-meta mb-6 text-fg-muted">{dict.workPage.label}</p>
-          <RevealText as="h1" variant="block" className="text-display-xl">
-            <HoverText text={dict.workPage.title} hover="bounce" />
+          <RevealText as="h1" className="text-display-xl">
+            <HoverText text={dict.workPage.title} />
           </RevealText>
         </div>
         <div className="max-w-md">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { gsap, mq, useGSAP } from "@/lib/motion";
 import { HoverText } from "@/components/motion/HoverText";
+import { RevealText } from "@/components/motion/Reveal";
 
 type Persona = { role: string; situation: string; outcome: string; image?: string };
 
@@ -44,9 +45,9 @@ export function Personas({ title, note, personas }: { title: string; note: strin
       <div className="mb-12 flex flex-wrap items-end justify-between gap-6 px-site">
         <div>
           <p className="text-meta mb-6">04</p>
-          <h2 id="personas-title" className="text-display-l">
+          <RevealText id="personas-title" className="text-display-l">
             <HoverText text={title} />
-          </h2>
+          </RevealText>
         </div>
         <p className="text-meta max-w-xs text-ink-muted">{note}</p>
       </div>

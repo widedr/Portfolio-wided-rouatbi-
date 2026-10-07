@@ -11,7 +11,7 @@ type Polymorphic<T extends ElementType> = { as?: T; children: ReactNode; classNa
 
 /**
  * Headings: rise from a mask when the element reaches 85% of the viewport —
- * letter by letter for <HoverText> titles, line by line otherwise. Plays once. Hidden state is applied by JS only,
+ * <HoverText> titles are typed in behind an accent block, others rise line by line. Plays once. Hidden state is applied by JS only,
  * so content stays visible without JavaScript or with reduced motion.
  */
 export function RevealText<T extends ElementType = "h2">({
@@ -19,9 +19,8 @@ export function RevealText<T extends ElementType = "h2">({
   children,
   className,
   delay = 0,
-  variant = "rise",
   ...rest
-}: Polymorphic<T> & { variant?: "rise" | "block" }) {
+}: Polymorphic<T>) {
   const Tag = (as ?? "h2") as ElementType;
   const ref = useRef<HTMLElement>(null);
 
@@ -30,8 +29,8 @@ export function RevealText<T extends ElementType = "h2">({
       const mm = gsap.matchMedia();
       mm.add(mq.motion, () => {
         const scrollTrigger = { trigger: ref.current, start: "top 85%", once: true };
-        // H1s: typed in behind an accent block (see blockReveal).
-        if (variant === "block") {
+        // Titles built with <HoverText>: typed in behind an accent block (see blockReveal).
+        if (ref.current!.querySelector("[data-char]")) {
           const reveal = blockReveal(ref.current!, { delay });
           reveal.hide();
           const st = ScrollTrigger.create({ ...scrollTrigger, onEnter: () => reveal.play() });
@@ -39,12 +38,6 @@ export function RevealText<T extends ElementType = "h2">({
             st.kill();
             reveal.revert();
           };
-        }
-        // Titles built with <HoverText>: letters rise one by one from their masks.
-        const letters = ref.current!.querySelectorAll("[data-top]");
-        if (letters.length) {
-          gsap.from(letters, { yPercent: 110, duration: duration.base, ease: ease.out, stagger: 0.012, delay, scrollTrigger });
-          return;
         }
         const split = SplitText.create(ref.current!, {
           type: "lines",
