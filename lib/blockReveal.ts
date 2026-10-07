@@ -3,8 +3,9 @@ import { gsap } from "@/lib/motion";
 /**
  * H1 entrance: on each line an accent block stretches from the left to cover
  * the line, then retracts to the right, the letters appearing in its wake as if
- * typed; it ends as a thin caret that fades out. Works on <HoverText> titles
- * (letters are `[data-char]`); lines are measured when the reveal plays.
+ * typed; it ends as a thin caret that fades out. The whole reveal stays under
+ * ~0.9s however long the title is. Works on <HoverText> titles (letters are
+ * `[data-char]`); lines are measured when the reveal plays.
  *
  * `hide()` masks the letters right away (call it in the setup, before paint);
  * `play()` measures, builds and runs the timeline; `revert()` cleans up.
@@ -58,20 +59,18 @@ export function blockReveal(root: HTMLElement, { delay = 0 } = {}) {
       const caret = Math.max(3, height * 0.04);
       const grow = { p: 0 };
       const sweep = { p: 0 };
-      tl!
-        .to(
-          grow,
-          {
-            p: 1,
-            duration: 0.45,
-            ease: "power3.inOut",
-            onUpdate: () => (block.style.width = `${Math.max(caret, width * grow.p)}px`),
-          },
-          i * 0.14,
-        )
+      // Each line gets its own short sequence; lines overlap with a small offset.
+      const seq = gsap
+        .timeline()
+        .to(grow, {
+          p: 1,
+          duration: 0.22,
+          ease: "power3.out",
+          onUpdate: () => (block.style.width = `${Math.max(caret, width * grow.p)}px`),
+        })
         .to(sweep, {
           p: 1,
-          duration: 0.55 + line.chars.length * 0.012,
+          duration: 0.32,
           ease: "power2.inOut",
           onUpdate: () => {
             const edge = width * sweep.p;
@@ -80,8 +79,8 @@ export function blockReveal(root: HTMLElement, { delay = 0 } = {}) {
             line.chars.forEach((c) => (c.el.style.opacity = c.x - line.left < edge ? "1" : "0"));
           },
         })
-        .to(block, { opacity: 0, duration: 0.25, repeat: 1, yoyo: true, ease: "steps(1)" })
-        .to(block, { opacity: 0, duration: 0.15 });
+        .to(block, { opacity: 0, duration: 0.12 });
+      tl!.add(seq, i * Math.min(0.06, 0.2 / lines.length));
     });
     tl.add(() => revertBlocks());
   };

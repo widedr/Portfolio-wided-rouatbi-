@@ -33,7 +33,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
         const tl = gsap
           .timeline({ paused: true })
           .add(() => name.play())
-          .from("[data-fade]", { opacity: 0, y: 20, duration: duration.base, ease: ease.out, stagger: stagger.items }, 0.9);
+          .from("[data-fade]", { opacity: 0, y: 20, duration: duration.base, ease: ease.out, stagger: stagger.items }, 0.45);
 
         // Role line: each title rolls up and the next one comes in from below.
         const roles = gsap.utils.toArray<HTMLElement>("[data-role]");
