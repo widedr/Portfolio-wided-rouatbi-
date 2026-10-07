@@ -13,8 +13,8 @@ import { blockReveal } from "@/lib/blockReveal";
 
 /**
  * Full-screen hero over a background video (or project visuals until one is
- * provided), centred: the name always visible, a role line that rotates
- * (UX/UI · Product · AI-Augmented Designer), one sentence, one call to action.
+ * provided), centred and kept light: the name, a small rotating role line
+ * (UX/UI · Product · AI-Augmented Designer) and one call to action.
  * The name is typed in behind an accent block after the loader, then the rest fades in.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
@@ -79,7 +79,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
         </h1>
 
         {/* Rotating role: decorative; the full list is read once by assistive tech */}
-        <p data-fade data-hero-intro className="mt-4 font-display text-[clamp(1.75rem,5.5vw,4.5rem)] font-medium leading-none tracking-[-0.03em] text-accent">
+        <p data-fade data-hero-intro className="mt-3 font-display text-[clamp(1.25rem,3vw,2.5rem)] font-medium leading-none tracking-[-0.03em] text-accent">
           <span className="sr-only">{t.roles.join(", ")}</span>
           <span className="grid overflow-hidden pb-[0.08em]" aria-hidden="true">
             {t.roles.map((role, i) => (
@@ -91,11 +91,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
           </span>
         </p>
 
-        <p data-fade data-hero-intro className="text-meta mt-10 max-w-[52ch] leading-relaxed text-fg-muted">
-          {t.lead} {t.leadEm}
-        </p>
-
-        <div data-fade data-hero-intro className="mt-10">
+        <div data-fade data-hero-intro className="mt-12">
           <Magnetic>
             <a
               href="#featured"
@@ -115,20 +111,14 @@ export function Hero({ dict }: { dict: Dictionary }) {
         </div>
       </div>
 
-      {/* Bottom bar: location · scroll · availability */}
+      {/* Bottom bar: location · availability (desktop only, kept quiet) */}
       <div
         data-fade
         data-hero-intro
-        className="text-meta absolute inset-x-0 bottom-6 grid grid-cols-1 gap-2 px-site text-fg-muted md:grid-cols-3 md:pr-24"
+        className="text-meta absolute inset-x-0 bottom-6 hidden justify-between px-site text-fg-muted md:flex md:pr-24"
       >
-        <span className="hidden text-left md:block">{t.based}</span>
-        <span className="flex items-center justify-center gap-3">
-          {t.scroll}
-          <span className="scroll-cue inline-block" aria-hidden="true">
-            ↓
-          </span>
-        </span>
-        <span className="hidden items-center justify-end gap-3 md:flex">
+        <span>{t.based}</span>
+        <span className="flex items-center gap-3">
           <span className="pulse-dot relative inline-block size-2 rounded-full bg-[#4ade80]" aria-hidden="true" />
           {t.relocation}
         </span>
