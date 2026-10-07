@@ -3,8 +3,8 @@ import { gsap } from "@/lib/motion";
 /**
  * H1 entrance: on each line an accent block stretches from the left to cover
  * the line, then retracts to the right, the letters appearing in its wake as if
- * typed; it ends as a thin caret that fades out. The whole reveal stays under
- * ~0.9s however long the title is. Works on <HoverText> titles (letters are
+ * typed; it ends as a thin caret that fades out. The whole reveal lasts
+ * ~0.85s however long the title is. Works on <HoverText> titles (letters are
  * `[data-char]`); lines are measured when the reveal plays.
  *
  * `hide()` masks the letters right away (call it in the setup, before paint);
@@ -26,7 +26,8 @@ export function blockReveal(root: HTMLElement, { delay = 0 } = {}) {
     // Group letters by visual line (same top, within a few px).
     const lines: { chars: { el: HTMLElement; x: number }[]; left: number; right: number; top: number; bottom: number }[] = [];
     chars.forEach((el) => {
-      const r = el.getBoundingClientRect();
+      // Measure the glyph, not its padded mask.
+      const r = (el.querySelector("[data-top]") ?? el).getBoundingClientRect();
       let line = lines.find((l) => Math.abs(l.top - (r.top - box.top)) < r.height * 0.4);
       if (!line) {
         line = { chars: [], left: Infinity, right: -Infinity, top: r.top - box.top, bottom: r.bottom - box.top };
@@ -64,13 +65,13 @@ export function blockReveal(root: HTMLElement, { delay = 0 } = {}) {
         .timeline()
         .to(grow, {
           p: 1,
-          duration: 0.22,
+          duration: 0.28,
           ease: "power3.out",
           onUpdate: () => (block.style.width = `${Math.max(caret, width * grow.p)}px`),
         })
         .to(sweep, {
           p: 1,
-          duration: 0.32,
+          duration: 0.45,
           ease: "power2.inOut",
           onUpdate: () => {
             const edge = width * sweep.p;

@@ -149,7 +149,7 @@ export function FeaturedCarousel({ slides, locale, dict }: { slides: Slide[]; lo
     if (!letters?.length) return;
     const tween = gsap.fromTo(
       letters,
-      { yPercent: 100 },
+      { yPercent: 130 },
       { yPercent: 0, duration: duration.short + 0.2, ease: ease.out, stagger: stagger.chars },
     );
     return () => {

@@ -75,10 +75,11 @@ export function HoverText({
           <span key={w}>
             <span className={cx("inline-block whitespace-nowrap", isAccent && "text-accent")}>
               {[...word].map((ch, i) => (
+                // Mask padded past the line box so descenders (g, y) and accents aren't cut.
                 <span
                   key={i}
                   data-char
-                  className="relative inline-block overflow-hidden align-bottom"
+                  className="relative -my-[0.18em] inline-block overflow-hidden py-[0.18em] align-bottom"
                   style={{ fontWeight: "var(--w, inherit)" as unknown as number }}
                 >
                   <span data-top className="inline-block">
