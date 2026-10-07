@@ -9,8 +9,12 @@ const MAX_WEIGHT = 900;
 const WAVE_RADIUS = 180; // px around the pointer that thickens
 
 /**
- * Title hover effect: a weight wave follows the pointer along the word
- * (variable font), the letters nearest the cursor thickening the most.
+ * Title hover effect, two flavours:
+ *  - "wave" (H2): a weight wave follows the pointer along the word (variable
+ *    font), the letters nearest the cursor thickening the most;
+ *  - "pressure" (H1), after React Bits' Text Pressure: while the pointer is
+ *    over the heading, every letter's weight (100 → 900) and slant follow its
+ *    distance to a smoothed pointer — thin far away, heavy and leaning close by.
  * Each letter keeps a `[data-top]` span so reveal animations can lift it in.
  * Touch and reduced-motion get plain text.
  */
@@ -19,12 +23,14 @@ export function HoverText({
   accent,
   as,
   className,
+  hover = "wave",
 }: {
   text: string;
   /** Optional trailing part shown in the accent colour (e.g. "rendus simples."). */
   accent?: string;
   as?: ElementType;
   className?: string;
+  hover?: "wave" | "pressure";
 }) {
   const Tag = (as ?? "span") as ElementType;
   const root = useRef<HTMLElement>(null);
@@ -36,6 +42,59 @@ export function HoverText({
     mm.add(`${mq.motion} and ${mq.fine}`, () => {
       const trigger = (el.closest("a, button") as HTMLElement | null) ?? el;
       const chars = gsap.utils.toArray<HTMLElement>(el.querySelectorAll("[data-char]"));
+
+      if (hover === "pressure") {
+        // The whole H1 is the active area, so multi-word names react as one.
+        const area = el.closest<HTMLElement>("h1") ?? trigger;
+        const target = { x: 0, y: 0 };
+        const pos = { x: 0, y: 0 };
+        let active = false;
+        let raf = 0;
+
+        const frame = () => {
+          pos.x += (target.x - pos.x) / 12;
+          pos.y += (target.y - pos.y) / 12;
+          const maxDist = Math.max(area.getBoundingClientRect().width / 2, 1);
+          chars.forEach((c) => {
+            const r = c.getBoundingClientRect();
+            const d = Math.hypot(pos.x - (r.left + r.width / 2), pos.y - (r.top + r.height / 2));
+            const k = Math.max(0, 1 - d / maxDist);
+            c.style.setProperty("--w", String(Math.round(100 + 800 * k)));
+            c.style.transform = `skewX(${(-12 * k).toFixed(2)}deg)`;
+          });
+          if (active) raf = requestAnimationFrame(frame);
+        };
+        const enter = (e: PointerEvent) => {
+          gsap.killTweensOf(chars);
+          target.x = pos.x = e.clientX;
+          target.y = pos.y = e.clientY;
+          if (!active) {
+            active = true;
+            raf = requestAnimationFrame(frame);
+          }
+        };
+        const move = (e: PointerEvent) => {
+          target.x = e.clientX;
+          target.y = e.clientY;
+        };
+        const leave = () => {
+          active = false;
+          cancelAnimationFrame(raf);
+          gsap.to(chars, { "--w": BASE_WEIGHT, skewX: 0, duration: 0.6, ease: "power2.out", overwrite: "auto" });
+        };
+        area.addEventListener("pointerenter", enter);
+        area.addEventListener("pointermove", move);
+        area.addEventListener("pointerleave", leave);
+        return () => {
+          active = false;
+          cancelAnimationFrame(raf);
+          area.removeEventListener("pointerenter", enter);
+          area.removeEventListener("pointermove", move);
+          area.removeEventListener("pointerleave", leave);
+          gsap.killTweensOf(chars);
+          gsap.set(chars, { clearProps: "--w,transform" });
+        };
+      }
 
       gsap.set(chars, { "--w": BASE_WEIGHT });
 
@@ -61,7 +120,7 @@ export function HoverText({
       };
     });
     return () => mm.revert();
-  }, [text, accent]);
+  }, [text, accent, hover]);
 
   return (
     <Tag ref={root} className={cx("inline-block", className)}>

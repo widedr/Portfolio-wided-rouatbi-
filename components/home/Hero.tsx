@@ -73,7 +73,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
         <h1 ref={title} data-hero-intro className="text-display-xl text-[clamp(3.5rem,13vw,9.5rem)] uppercase">
           {t.name.split(" ").map((word) => (
             <span key={word} className="inline-block px-[0.12em] pb-[0.04em] align-top">
-              <HoverText text={word} />
+              <HoverText text={word} hover="pressure" />
             </span>
           ))}
         </h1>
