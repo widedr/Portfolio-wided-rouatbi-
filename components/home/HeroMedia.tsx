@@ -6,8 +6,8 @@ import { site } from "@/lib/site";
 import { mq } from "@/lib/motion";
 
 /**
- * Full-bleed hero background. Plays `site.heroVideo` (muted, looping, paused
- * off-screen) when one is configured; otherwise cross-fades the project
+ * Full-bleed hero background. Plays `site.heroVideo` right away (muted,
+ * looping, no poster, paused off-screen) when one is configured; otherwise cross-fades the project
  * visuals with a slow zoom. Reduced motion: a single still frame.
  */
 export function HeroMedia() {
@@ -22,7 +22,10 @@ export function HeroMedia() {
     setAnimate(!reduced);
     const v = video.current;
     if (v) {
-      if (reduced) return;
+      if (reduced) {
+        v.pause();
+        return;
+      }
       const io = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting) v.play().catch(() => {});
         else v.pause();
@@ -41,13 +44,15 @@ export function HeroMedia() {
         <video
           ref={video}
           className="h-full w-full object-cover"
-          src={site.heroVideo.src}
-          poster={site.heroVideo.poster}
+          autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
-        />
+          preload="auto"
+        >
+          <source src={site.heroVideo.mp4} type="video/mp4" />
+          <source src={site.heroVideo.webm} type="video/webm" />
+        </video>
       ) : (
         images.map((src, i) => (
           <Image
@@ -67,7 +72,7 @@ export function HeroMedia() {
         ))
       )}
       {/* Keeps the centred text legible over any frame */}
-      <div className="absolute inset-0 bg-[#0f0f0e]/80" />
+      <div className={site.heroVideo ? "absolute inset-0 bg-[#0f0f0e]/60" : "absolute inset-0 bg-[#0f0f0e]/80"} />
       <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f0e]/60 via-transparent to-[#0f0f0e]" />
     </div>
   );
