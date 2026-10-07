@@ -8,15 +8,17 @@ import { ArrowSwap } from "@/components/layout/RollText";
 import { scrollToTarget, useLenis } from "@/components/layout/SmoothScroll";
 import { HeroMedia } from "./HeroMedia";
 import { HoverText } from "@/components/motion/HoverText";
+import { blockReveal } from "@/lib/blockReveal";
 
 /**
  * Full-screen hero over a background video (or project visuals until one is
  * provided), centred: the name always visible, a role line that rotates
  * (UX/UI · Product · AI-Augmented Designer), one sentence, one call to action.
- * Lines rise from their masks after the loader, then the rest fades in.
+ * The name is typed in behind an accent block after the loader, then the rest fades in.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
   const root = useRef<HTMLElement>(null);
+  const title = useRef<HTMLHeadingElement>(null);
   const lenis = useLenis();
   const t = dict.hero;
 
@@ -26,10 +28,12 @@ export function Hero({ dict }: { dict: Dictionary }) {
       mm.add(mq.motion, () => {
         // Lift the CSS pre-hide first so `from` tweens record the visible state as their end.
         gsap.set("[data-hero-intro]", { opacity: 1 });
+        const name = blockReveal(title.current!);
+        name.hide();
         const tl = gsap
           .timeline({ paused: true })
-          .from("[data-line]", { yPercent: 110, duration: duration.long, ease: ease.out, stagger: stagger.lines + 0.02 })
-          .from("[data-fade]", { opacity: 0, y: 20, duration: duration.base, ease: ease.out, stagger: stagger.items }, "-=0.7");
+          .add(() => name.play())
+          .from("[data-fade]", { opacity: 0, y: 20, duration: duration.base, ease: ease.out, stagger: stagger.items }, 0.9);
 
         // Role line: each title rolls up and the next one comes in from below.
         const roles = gsap.utils.toArray<HTMLElement>("[data-role]");
@@ -44,7 +48,10 @@ export function Hero({ dict }: { dict: Dictionary }) {
         tl.add(() => cycle.play());
 
         const off = whenLoaderDone(() => tl.play());
-        return off;
+        return () => {
+          off();
+          name.revert();
+        };
       });
       mm.add(mq.reduced, () => {
         gsap.set("[data-hero-intro]", { opacity: 1 });
@@ -62,12 +69,10 @@ export function Hero({ dict }: { dict: Dictionary }) {
       <HeroMedia />
 
       <div className="relative flex flex-col items-center">
-        <h1 className="text-display-xl text-[clamp(3.5rem,13vw,9.5rem)] uppercase">
+        <h1 ref={title} data-hero-intro className="text-display-xl text-[clamp(3.5rem,13vw,9.5rem)] uppercase">
           {t.name.split(" ").map((word) => (
-            <span key={word} className="inline-block overflow-hidden px-[0.12em] pb-[0.04em] align-top">
-              <span data-line data-hero-intro className="block">
-                <HoverText text={word} />
-              </span>
+            <span key={word} className="inline-block px-[0.12em] pb-[0.04em] align-top">
+              <HoverText text={word} hover="bounce" />
             </span>
           ))}
         </h1>

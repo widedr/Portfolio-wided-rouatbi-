@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { duration, ease, gsap, mq, stagger, useGSAP, whenLoaderDone } from "@/lib/motion";
 import { HoverText } from "@/components/motion/HoverText";
+import { blockReveal } from "@/lib/blockReveal";
 
 type Props = {
   title: string;
@@ -15,7 +16,7 @@ type Props = {
 };
 
 /**
- * Full-screen opening. Title letters rise in; on scroll the visual shrinks and
+ * Full-screen opening. The title is typed in behind an accent block; on scroll the visual shrinks and
  * rounds (scale 1 → 0.9, radius 0 → 24px) while the title moves faster.
  */
 export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel }: Props) {
@@ -27,11 +28,13 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
       mm.add(mq.motion, () => {
         // Lift the CSS pre-hide first so `from` tweens record the visible state as their end.
         gsap.set("[data-hero-intro]", { opacity: 1 });
+        const name = blockReveal(root.current!.querySelector<HTMLElement>("[data-title]")!);
+        name.hide();
         const tl = gsap
           .timeline({ paused: true })
           .from("[data-visual]", { clipPath: "inset(100% 0% 0% 0%)", duration: duration.long, ease: ease.inOut })
           .from("[data-visual] img", { scale: 1.2, duration: duration.long * 1.3, ease: ease.out }, "<")
-          .from("[data-title] [data-top]", { yPercent: 110, duration: duration.base, ease: ease.out, stagger: stagger.chars }, "-=0.7")
+          .add(() => name.play(), "-=0.7")
           .from("[data-sub]", { opacity: 0, y: 16, duration: duration.base, ease: ease.out, stagger: stagger.items }, "-=0.5");
         const off = whenLoaderDone(() => tl.play());
 
@@ -48,6 +51,7 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
         });
         return () => {
           off();
+          name.revert();
         };
       });
       mm.add(mq.reduced, () => {
@@ -70,7 +74,7 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
           {eyebrow}
         </p>
         <h1 data-title data-hero-intro className="text-display-xl">
-          <HoverText text={title} />
+          <HoverText text={title} hover="bounce" />
         </h1>
         <div className="mt-8 flex flex-wrap items-end justify-between gap-6">
           <p data-sub data-hero-intro className="text-body-l max-w-[40ch]">
