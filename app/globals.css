@@ -171,11 +171,6 @@ em {
   color: var(--ink);
 }
 .theme-paper ::selection,
-.theme-paper .btn-fill:hover,
-.theme-paper .btn-fill:focus-visible {
-  color: #141412;
-}
-
 /* Skip link */
 .skip-link {
   position: fixed;
@@ -264,32 +259,63 @@ em {
   transform: translateX(0);
 }
 
-/* Primary button: accent fill grows from the pointer entry point */
-.btn-fill {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-.btn-fill .btn-fill__blob {
-  position: absolute;
-  left: var(--x, 50%);
-  top: var(--y, 50%);
-  width: 250%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--accent);
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 600ms var(--ease-out);
-  z-index: -1;
-}
-.btn-fill:hover .btn-fill__blob,
-.btn-fill:focus-visible .btn-fill__blob {
-  transform: translate(-50%, -50%) scale(1);
-}
-.btn-fill:hover,
-.btn-fill:focus-visible {
-  color: var(--ink);
-  border-color: var(--accent);
+/* Primary button ("Star Border"): in the components layer so utilities (hidden, sm:…) still win */
+@layer components {
+  /* Primary button ("Star Border"): accent glows run along the edges behind a dark pill */
+  .star-border {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 9999px;
+    padding: 2px 0;
+  }
+  .star-border__glow {
+    position: absolute;
+    width: 300%;
+    height: 50%;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent), transparent 18%);
+    animation: star-move 4s linear infinite alternate;
+  }
+  .star-border__glow--bottom {
+    bottom: -12px;
+    right: -250%;
+    --star-to: -100%;
+  }
+  .star-border__glow--top {
+    top: -12px;
+    left: -250%;
+    --star-to: 100%;
+  }
+  .star-border__inner {
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgb(242 239 233 / 0.1);
+    border-radius: inherit;
+    background: linear-gradient(to bottom, #0f0f0e, #1c1c19);
+    color: #f2efe9;
+    transition: border-color 300ms var(--ease-out), color 300ms var(--ease-out);
+  }
+  .star-border:hover .star-border__inner,
+  .star-border:focus-visible .star-border__inner {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  @keyframes star-move {
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(var(--star-to));
+      opacity: 0.25;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .star-border__glow {
+      animation: none;
+    }
+  }
 }
 
 /* Image loading: dominant-colour placeholder, then fade + de-zoom */

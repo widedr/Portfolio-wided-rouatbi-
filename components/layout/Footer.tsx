@@ -7,6 +7,7 @@ import { duration, ease, gsap, mq, stagger, useGSAP } from "@/lib/motion";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { LocalClock } from "./LocalClock";
 import { ArrowSwap } from "./RollText";
+import { StarBorder } from "./StarBorder";
 import { scrollToTarget, useLenis } from "./SmoothScroll";
 
 export function Footer({ dict }: { dict: Dictionary }) {
@@ -83,10 +84,10 @@ export function Footer({ dict }: { dict: Dictionary }) {
             <button
               type="button"
               onClick={copy}
-              className="text-meta min-h-11 rounded-full border border-line px-4 transition-colors duration-200 hover:border-accent hover:text-accent"
+              className="star-border"
               data-cursor="link"
             >
-              {copied ? dict.footer.copied : dict.footer.copy}
+              <StarBorder className="text-meta inline-flex min-h-11 items-center px-4">{copied ? dict.footer.copied : dict.footer.copy}</StarBorder>
             </button>
             <span className="sr-only" aria-live="polite">
               {copied ? dict.footer.copiedAnnounce : ""}
@@ -132,13 +133,15 @@ export function Footer({ dict }: { dict: Dictionary }) {
             <button
               type="button"
               onClick={() => scrollToTarget(lenis, 0)}
-              className="group/top text-meta inline-flex min-h-11 items-center gap-3 rounded-full border border-line px-5"
+              className="star-border group/top"
               data-cursor="link"
             >
-              {dict.footer.backToTop}
-              <span aria-hidden="true" className="inline-block transition-transform duration-500 ease-out group-hover/top:rotate-[360deg]">
-                ↑
-              </span>
+              <StarBorder className="text-meta inline-flex min-h-11 items-center gap-3 px-5">
+                {dict.footer.backToTop}
+                <span aria-hidden="true" className="inline-block transition-transform duration-500 ease-out group-hover/top:rotate-[360deg]">
+                  ↑
+                </span>
+              </StarBorder>
             </button>
           </Magnetic>
         </div>

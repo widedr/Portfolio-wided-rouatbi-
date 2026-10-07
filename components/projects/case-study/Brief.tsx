@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { ArrowSwap } from "@/components/layout/RollText";
+import { StarBorder } from "@/components/layout/StarBorder";
 import { HoverText } from "@/components/motion/HoverText";
 
 type Item = { label: string; value: string };
@@ -27,10 +28,11 @@ export function Brief({ title, items, live }: { title: string; items: Item[]; li
               href={live.href}
               target="_blank"
               rel="noreferrer"
-              className="btn-fill arrow-trigger inline-flex min-h-14 items-center gap-3 rounded-full border border-fg px-7"
+              className="star-border arrow-trigger"
             >
-              <span className="btn-fill__blob" aria-hidden="true" />
-              {live.label} <ArrowSwap direction="up-right" />
+              <StarBorder className="inline-flex min-h-14 items-center gap-3 px-7">
+                {live.label} <ArrowSwap direction="up-right" />
+              </StarBorder>
             </a>
           </Magnetic>
         </div>

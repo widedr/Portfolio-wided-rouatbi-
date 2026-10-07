@@ -5,6 +5,7 @@ import type { Dictionary } from "@/lib/i18n";
 import { duration, ease, gsap, mq, stagger, useGSAP, whenLoaderDone } from "@/lib/motion";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { ArrowSwap } from "@/components/layout/RollText";
+import { StarBorder } from "@/components/layout/StarBorder";
 import { scrollToTarget, useLenis } from "@/components/layout/SmoothScroll";
 import { HeroMedia } from "./HeroMedia";
 import { HoverText } from "@/components/motion/HoverText";
@@ -102,12 +103,13 @@ export function Hero({ dict }: { dict: Dictionary }) {
                 e.preventDefault();
                 scrollToTarget(lenis, "#featured");
               }}
-              className="btn-fill arrow-trigger inline-flex min-h-14 items-center gap-3 rounded-full border border-fg px-7 font-medium"
+              className="star-border arrow-trigger"
               data-cursor="link"
             >
-              <span className="btn-fill__blob" aria-hidden="true" />
-              {t.cta}
-              <ArrowSwap direction="down" />
+              <StarBorder className="inline-flex min-h-14 items-center gap-3 px-7 font-medium">
+                {t.cta}
+                <ArrowSwap direction="down" />
+              </StarBorder>
             </a>
           </Magnetic>
         </div>

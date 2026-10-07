@@ -6,6 +6,7 @@ import { ProjectCard } from "@/components/projects/ProjectCard";
 import { RevealText } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { ArrowSwap } from "@/components/layout/RollText";
+import { StarBorder } from "@/components/layout/StarBorder";
 import { HoverText } from "@/components/motion/HoverText";
 
 /* Magazine rhythm: varied widths, aspect ratios and vertical offsets. */
@@ -49,12 +50,13 @@ export function SelectedWork({ dict, locale }: { dict: Dictionary; locale: Local
         <Magnetic>
           <Link
             href={href(locale, "/work")}
-            className="btn-fill arrow-trigger inline-flex min-h-14 items-center gap-3 rounded-full border border-fg px-8 font-medium"
+            className="star-border arrow-trigger"
             data-cursor="link"
           >
-            <span className="btn-fill__blob" aria-hidden="true" />
-            {dict.work.viewAll}
-            <ArrowSwap />
+            <StarBorder className="inline-flex min-h-14 items-center gap-3 px-8 font-medium">
+              {dict.work.viewAll}
+              <ArrowSwap />
+            </StarBorder>
           </Link>
         </Magnetic>
       </div>

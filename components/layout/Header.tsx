@@ -7,6 +7,7 @@ import type { Dictionary, Locale } from "@/lib/i18n";
 import { href } from "@/lib/i18n";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { Menu } from "./Menu";
+import { StarBorder } from "@/components/layout/StarBorder";
 import { RollText } from "./RollText";
 import { scrollToTarget, useLenis } from "./SmoothScroll";
 
@@ -71,10 +72,12 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                 setOpen(false);
                 scrollToTarget(lenis, "#contact");
               }}
-              className="roll-trigger text-meta hidden min-h-11 items-center rounded-full border border-current px-5 sm:inline-flex"
+              className="star-border roll-trigger hidden sm:inline-block"
               data-cursor="link"
             >
-              <RollText>{dict.nav.cta}</RollText>
+              <StarBorder className="text-meta inline-flex min-h-11 items-center px-5">
+                <RollText>{dict.nav.cta}</RollText>
+              </StarBorder>
             </a>
           </div>
         </div>

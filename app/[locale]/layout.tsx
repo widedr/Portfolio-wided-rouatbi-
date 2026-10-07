@@ -8,7 +8,6 @@ import { Cursor } from "@/components/layout/Cursor";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Loader } from "@/components/layout/Loader";
-import { PointerFill } from "@/components/layout/PointerFill";
 import { RouteAnnouncer } from "@/components/layout/RouteAnnouncer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 
@@ -83,7 +82,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         </SmoothScroll>
         <ChatWidget dict={dict} locale={locale} />
         <Cursor />
-        <PointerFill />
         <RouteAnnouncer prefix={dict.a11y.pageChanged} />
       </body>
     </html>
