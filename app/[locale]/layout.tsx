@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   if (!isLocale(locale)) return {};
   const dict = getDictionary(locale);
   return {
-    metadataBase: new URL("https://portfolio-wided-rouatbi.vercel.app"),
+    metadataBase: new URL("https://portfoliowidedrouatbi.vercel.app"),
     title: { default: dict.meta.title, template: "%s — Wided Rouatbi" },
     description: dict.meta.description,
     alternates: { languages: { fr: "/fr", en: "/en" } },
