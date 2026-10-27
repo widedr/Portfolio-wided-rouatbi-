@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
 import { notFound } from "next/navigation";
 import { getDictionary, href, isLocale, locales, type Locale } from "@/lib/i18n";
 import { getNextProject, getProject, projects, type Project } from "@/lib/projects";
@@ -52,10 +51,9 @@ export default async function ProjectPage({ params }: PageProps<"/[locale]/work/
     ...(cs?.status ? [{ label: p.status, value: cs.status[locale] }] : []),
   ];
 
-  const themeStyle = { "--bg": project.theme.bg, backgroundColor: project.theme.bg, color: project.theme.fg } as CSSProperties;
-
+  // Case studies share the site's warm black; the project colour only tints cards and slides.
   return (
-    <article style={themeStyle}>
+    <article>
       <ProjectHero
         title={project.title}
         subtitle={cs?.subtitle[locale] ?? project.description[locale]}
