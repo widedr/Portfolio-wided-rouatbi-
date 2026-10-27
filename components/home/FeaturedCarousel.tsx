@@ -171,7 +171,7 @@ export function FeaturedCarousel({ slides, locale, dict }: { slides: Slide[]; lo
     <section ref={root} id="featured" className="relative overflow-hidden py-section" aria-labelledby="featured-title">
       <div className="mb-12 flex items-end justify-between gap-6 px-site">
         <h2 id="featured-title" className="text-meta text-fg-muted">
-          <HoverText text={`01 — ${t.carouselLabel}`} />
+          <HoverText text={`02 — ${t.carouselLabel}`} />
         </h2>
         <span className="text-meta hidden text-fg-muted lg:inline">{t.hint}</span>
       </div>

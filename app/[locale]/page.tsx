@@ -30,8 +30,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   return (
     <>
       <Hero dict={dict} />
-      <FeaturedCarousel slides={slides} locale={locale} dict={dict} />
       <About dict={dict} locale={locale} />
+      <FeaturedCarousel slides={slides} locale={locale} dict={dict} />
       <Experience dict={dict} locale={locale} />
       <SelectedWork dict={dict} locale={locale} />
       <Bands dict={dict} />

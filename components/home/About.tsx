@@ -59,7 +59,7 @@ export function About({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 
         {/* Right: statement, bio, figures, skills */}
         <div className="order-1 col-span-4 md:order-none md:col-span-4 lg:col-span-7 lg:col-start-6">
-          <p className="text-meta mb-6">02 — {a.label}</p>
+          <p className="text-meta mb-6">01 — {a.label}</p>
           <RevealText id="about-title" className="text-h2 max-w-[24ch]">
             <HoverText text={about.leadPrefix[locale].trim()} accent={about.leadHighlight[locale]} />
           </RevealText>
