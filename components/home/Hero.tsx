@@ -65,7 +65,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
   return (
     <section
       ref={root}
-      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-site pb-24 pt-[var(--header-h)] text-center"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-site pt-[var(--header-h)] text-center"
     >
       <HeroMedia />
 
@@ -109,19 +109,6 @@ export function Hero({ dict }: { dict: Dictionary }) {
             </a>
           </Magnetic>
         </div>
-      </div>
-
-      {/* Bottom bar: location · availability (desktop only, kept quiet) */}
-      <div
-        data-fade
-        data-hero-intro
-        className="text-meta absolute inset-x-0 bottom-6 hidden justify-between px-site text-fg-muted md:flex md:pr-24"
-      >
-        <span>{t.based}</span>
-        <span className="flex items-center gap-3">
-          <span className="pulse-dot relative inline-block size-2 rounded-full bg-[#4ade80]" aria-hidden="true" />
-          {t.relocation}
-        </span>
       </div>
     </section>
   );
