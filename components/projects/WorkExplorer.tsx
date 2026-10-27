@@ -143,7 +143,7 @@ export function WorkExplorer({
 
       {view === "grid" ? (
         <ul ref={grid} className="grid gap-x-[var(--gutter)] gap-y-16 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p) => (
+          {projects.map((p, i) => (
             <li key={p.slug} data-card className={visible(p) ? undefined : "hidden"}>
               <ProjectCard
                 project={p}
@@ -152,6 +152,7 @@ export function WorkExplorer({
                 aspect="aspect-[4/3]"
                 sizes="(min-width: 1024px) 31vw, (min-width: 768px) 47vw, 100vw"
                 index={shown.indexOf(p) + 1 || undefined}
+                priority={i < 3}
               />
             </li>
           ))}

@@ -29,12 +29,18 @@ export function Hero({ dict }: { dict: Dictionary }) {
       mm.add(mq.motion, () => {
         // Lift the CSS pre-hide first so `from` tweens record the visible state as their end.
         gsap.set("[data-hero-intro]", { opacity: 1 });
-        const name = blockReveal(title.current!);
-        name.hide();
-        const tl = gsap
-          .timeline({ paused: true })
-          .add(() => name.play())
-          .from("[data-fade]", { opacity: 0, y: 20, duration: duration.base, ease: ease.out, stagger: stagger.items }, 0.45);
+        // The typed-in name and fades are a desktop flourish; phones show the hero at once.
+        const intro = window.matchMedia(`${mq.fine} and (min-width: 768px)`).matches;
+        const name = intro ? blockReveal(title.current!) : null;
+        name?.hide();
+        const tl = gsap.timeline({ paused: true });
+        if (name) {
+          tl.add(() => name.play()).from(
+            "[data-fade]",
+            { opacity: 0, y: 20, duration: duration.base, ease: ease.out, stagger: stagger.items },
+            0.45,
+          );
+        }
 
         // Role line: each title rolls up and the next one comes in from below.
         const roles = gsap.utils.toArray<HTMLElement>("[data-role]");
@@ -51,7 +57,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
         const off = whenLoaderDone(() => tl.play());
         return () => {
           off();
-          name.revert();
+          name?.revert();
         };
       });
       mm.add(mq.reduced, () => {

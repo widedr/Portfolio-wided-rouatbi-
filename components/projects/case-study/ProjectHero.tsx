@@ -28,14 +28,17 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
       mm.add(mq.motion, () => {
         // Lift the CSS pre-hide first so `from` tweens record the visible state as their end.
         gsap.set("[data-hero-intro]", { opacity: 1 });
-        const name = blockReveal(root.current!.querySelector<HTMLElement>("[data-title]")!);
-        name.hide();
-        const tl = gsap
-          .timeline({ paused: true })
-          .from("[data-visual]", { clipPath: "inset(100% 0% 0% 0%)", duration: duration.long, ease: ease.inOut })
-          .from("[data-visual] img", { scale: 1.2, duration: duration.long * 1.3, ease: ease.out }, "<")
-          .add(() => name.play(), "-=0.7")
-          .from("[data-sub]", { opacity: 0, y: 16, duration: duration.base, ease: ease.out, stagger: stagger.items }, "-=0.5");
+        // Desktop gets the full intro; phones show the cover and title at once.
+        const intro = window.matchMedia(`${mq.fine} and (min-width: 768px)`).matches;
+        const name = intro ? blockReveal(root.current!.querySelector<HTMLElement>("[data-title]")!) : null;
+        name?.hide();
+        const tl = gsap.timeline({ paused: true });
+        if (name) {
+          tl.from("[data-visual]", { clipPath: "inset(100% 0% 0% 0%)", duration: duration.long, ease: ease.inOut })
+            .from("[data-visual] img", { scale: 1.2, duration: duration.long * 1.3, ease: ease.out }, "<")
+            .add(() => name.play(), "-=0.7")
+            .from("[data-sub]", { opacity: 0, y: 16, duration: duration.base, ease: ease.out, stagger: stagger.items }, "-=0.5");
+        }
         const off = whenLoaderDone(() => tl.play());
 
         gsap.to("[data-visual]", {
@@ -51,7 +54,7 @@ export function ProjectHero({ title, subtitle, eyebrow, cover, alt, scrollLabel 
         });
         return () => {
           off();
-          name.revert();
+          name?.revert();
         };
       });
       mm.add(mq.reduced, () => {

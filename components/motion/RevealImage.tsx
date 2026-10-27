@@ -25,7 +25,8 @@ export function RevealImage({ className, imageClassName, parallax = false, tint 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add(mq.motion, () => {
+      // Priority (above-the-fold) images are shown as-is: no hide-then-reveal on first paint.
+      if (!img.priority) mm.add(mq.motion, () => {
         const inner = frame.current!.querySelector("[data-inner]");
         gsap
           .timeline({ scrollTrigger: { trigger: frame.current, start: "top 85%", once: true } })
@@ -59,7 +60,7 @@ export function RevealImage({ className, imageClassName, parallax = false, tint 
             alt={alt}
             onLoad={() => setLoaded(true)}
             data-loaded={loaded}
-            className={cx("img-fade h-full w-full object-cover", imageClassName)}
+            className={cx(!img.priority && "img-fade", "h-full w-full object-cover", imageClassName)}
           />
         </div>
       </div>

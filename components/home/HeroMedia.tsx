@@ -51,6 +51,8 @@ export function HeroMedia() {
           playsInline
           preload="auto"
         >
+          <source src={site.heroVideo.mobileMp4} type="video/mp4" media="(max-width: 767px)" />
+          <source src={site.heroVideo.mobileWebm} type="video/webm" media="(max-width: 767px)" />
           <source src={site.heroVideo.mp4} type="video/mp4" />
           <source src={site.heroVideo.webm} type="video/webm" />
         </video>

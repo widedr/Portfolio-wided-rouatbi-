@@ -354,9 +354,12 @@ em {
   transform: none;
 }
 
-/* Hero entrance hidden state — only when JS runs (html.js set in <head>) */
-.js [data-hero-intro] {
-  opacity: 0;
+/* Hero entrance hidden state — only when JS runs (html.js set in <head>) and on
+   mouse/trackpad screens; phones show the hero at once (faster first paint). */
+@media (pointer: fine) and (min-width: 768px) {
+  .js [data-hero-intro] {
+    opacity: 0;
+  }
 }
 
 /* Loader is skipped once seen this session (flag set in <head>) */

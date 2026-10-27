@@ -15,10 +15,12 @@ type Props = {
   sizes: string;
   index?: number;
   className?: string;
+  /** Above the fold: load eagerly and skip the reveal. */
+  priority?: boolean;
 };
 
 /** Editorial project card: large visual, title, sector, meta and a few tags. */
-export function ProjectCard({ project, locale, dict, aspect = "aspect-[16/10]", sizes, index, className }: Props) {
+export function ProjectCard({ project, locale, dict, aspect = "aspect-[16/10]", sizes, index, className, priority }: Props) {
   return (
     <article className={cx("group/card", className)}>
       <Link
@@ -33,6 +35,7 @@ export function ProjectCard({ project, locale, dict, aspect = "aspect-[16/10]", 
             alt=""
             fill
             sizes={sizes}
+            priority={priority}
             parallax
             tint={project.theme.bg}
             className={aspect}

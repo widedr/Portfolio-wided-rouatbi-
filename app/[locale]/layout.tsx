@@ -3,8 +3,7 @@ import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
-import { ChatWidget } from "@/components/layout/ChatWidget";
-import { Cursor } from "@/components/layout/Cursor";
+import { DeferredUI } from "@/components/layout/DeferredUI";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Loader } from "@/components/layout/Loader";
@@ -56,7 +55,7 @@ export const viewport: Viewport = {
  * - `js` class lets CSS hide hero intro elements only when JS will reveal them;
  * - `data-loader-seen` hides the first-load screen for the rest of the session.
  */
-const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(sessionStorage.getItem('wr-loader-seen'))d.setAttribute('data-loader-seen','')}catch(e){}})();`;
+const bootScript = `(function(){var d=document.documentElement;d.classList.add('js');try{if(sessionStorage.getItem('wr-loader-seen')||matchMedia('(pointer:coarse)').matches||innerWidth<768)d.setAttribute('data-loader-seen','')}catch(e){}})();`;
 
 export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
   const { locale } = await params;
@@ -81,8 +80,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
           <main id="main">{children}</main>
           <Footer dict={dict} />
         </SmoothScroll>
-        <ChatWidget dict={dict} locale={locale} />
-        <Cursor />
+        <DeferredUI dict={dict} locale={locale} />
         <PageTransition label="Wided Rouatbi" />
         <RouteAnnouncer prefix={dict.a11y.pageChanged} />
       </body>
