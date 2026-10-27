@@ -19,7 +19,7 @@
 
   --gutter: clamp(16px, 2vw, 32px);
   --margin: clamp(16px, 4vw, 64px);
-  --section: clamp(64px, 8vw, 128px);
+  --section: clamp(48px, 6vw, 96px);
   --header-h: 72px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
