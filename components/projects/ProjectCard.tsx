@@ -5,8 +5,10 @@ import type { Project } from "@/lib/projects";
 import { cx } from "@/lib/cx";
 import { RevealImage } from "@/components/motion/RevealImage";
 
+export type CardProject = Pick<Project, "slug" | "title" | "sector" | "tagline" | "tags" | "cover" | "theme">;
+
 type Props = {
-  project: Project;
+  project: CardProject;
   locale: Locale;
   dict: Dictionary;
   aspect?: string;

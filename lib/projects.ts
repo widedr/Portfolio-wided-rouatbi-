@@ -22,8 +22,38 @@ export type CaseStudy = {
   };
 };
 
+export const categories = ["finance", "saas", "commerce", "lifestyle"] as const;
+export type Category = (typeof categories)[number];
+
+/** Filter groups for the work page. */
+const categoryOf: Record<string, Category> = {
+  "mathis-bs": "finance",
+  "planet-tax-solution": "finance",
+  "bridge-global-funding": "finance",
+  convergence: "finance",
+  "fuze-digital-africa": "finance",
+  "comptat-credit-debit": "finance",
+  attunea: "saas",
+  "five-guys": "saas",
+  demco: "saas",
+  rizouya: "saas",
+  "comptat-rh": "saas",
+  "clever-harvest": "saas",
+  "carrefour-tn": "commerce",
+  "avs-vip-services": "commerce",
+  "clinique-veterinaire-hammamet": "commerce",
+  masaya: "commerce",
+  "travel-shaper": "commerce",
+  "ess-identity": "lifestyle",
+  "sheikh-zayed-grand-mosque": "lifestyle",
+  kindeal: "lifestyle",
+  split: "lifestyle",
+  "cash-money-soccer-tour": "lifestyle",
+};
+
 export type Project = SourceProject & {
   order: number;
+  category: Category;
   featured: boolean;
   year?: number;
   sector: Localized;
@@ -34,7 +64,7 @@ export type Project = SourceProject & {
   caseStudy?: CaseStudy;
 };
 
-type Presentation = Omit<Project, keyof SourceProject | "order" | "cover"> & { cover?: Partial<Project["cover"]> };
+type Presentation = Omit<Project, keyof SourceProject | "order" | "cover" | "category"> & { cover?: Partial<Project["cover"]> };
 
 const coverSize = { width: 1600, height: 1345 };
 const ink = { bg: "#0f0f0e", fg: "#f2efe9" };
@@ -192,10 +222,13 @@ const presentation: Record<string, Presentation> = {
 export const projects: Project[] = sourceProjects.map((p, i) => {
   const extra = presentation[p.slug];
   if (!extra) throw new Error(`Missing presentation for project "${p.slug}"`);
+  const category = categoryOf[p.slug];
+  if (!category) throw new Error(`Missing category for project "${p.slug}"`);
   return {
     ...p,
     ...extra,
     order: i + 1,
+    category,
     cover: { src: p.image ?? `/images/projects/${p.slug}.jpg`, ...coverSize, ...extra.cover },
   };
 });

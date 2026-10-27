@@ -160,6 +160,10 @@ export const fr = {
     columns: { index: "N°", name: "Projet", sector: "Secteur", role: "Employeur", duration: "Durée" },
     caseStudy: "Étude de cas",
     count: "{n} projets",
+    filterLabel: "Filtrer par domaine",
+    filters: { all: "Tous", finance: "Finance & fintech", saas: "SaaS & outils métier", commerce: "Commerce & services", lifestyle: "Lifestyle & culture" },
+    viewLabel: "Affichage",
+    views: { grid: "Grille", list: "Liste" },
   },
   project: {
     brief: "En bref",

@@ -162,6 +162,10 @@ export const en: typeof fr = {
     columns: { index: "No.", name: "Project", sector: "Sector", role: "Employer", duration: "Duration" },
     caseStudy: "Case study",
     count: "{n} projects",
+    filterLabel: "Filter by field",
+    filters: { all: "All", finance: "Finance & fintech", saas: "SaaS & business tools", commerce: "Commerce & services", lifestyle: "Lifestyle & culture" },
+    viewLabel: "View",
+    views: { grid: "Grid", list: "List" },
   },
   project: {
     brief: "At a glance",
