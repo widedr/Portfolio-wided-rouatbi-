@@ -34,7 +34,7 @@ export default async function WorkPage({ params }: PageProps<"/[locale]/work">) 
         <div>
           <p className="text-meta mb-6 text-fg-muted">{dict.workPage.label}</p>
           <RevealText as="h1" className="text-display-xl">
-            <HoverText text={dict.workPage.title} />
+            <HoverText text={dict.workPage.title} hover="pressure" />
           </RevealText>
         </div>
         <div className="max-w-md">
