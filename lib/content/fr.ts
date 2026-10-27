@@ -17,6 +17,8 @@ export const fr = {
     menu: "Menu",
     close: "Fermer",
     cta: "Me contacter",
+    soundOn: "Activer la musique",
+    soundOff: "Couper la musique",
     language: "Langue",
     menuLabel: "Navigation principale",
     localTime: "Heure locale",

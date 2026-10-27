@@ -19,6 +19,8 @@ export const en: typeof fr = {
     menu: "Menu",
     close: "Close",
     cta: "Get in touch",
+    soundOn: "Turn music on",
+    soundOff: "Turn music off",
     language: "Language",
     menuLabel: "Main navigation",
     localTime: "Local time",

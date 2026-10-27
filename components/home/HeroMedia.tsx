@@ -43,6 +43,7 @@ export function HeroMedia() {
       {site.heroVideo ? (
         <video
           ref={video}
+          data-hero-video
           className="h-full w-full object-cover"
           autoPlay
           muted

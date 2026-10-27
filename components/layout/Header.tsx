@@ -9,6 +9,7 @@ import { LocaleSwitch } from "./LocaleSwitch";
 import { Menu } from "./Menu";
 import { StarBorder } from "@/components/layout/StarBorder";
 import { RollText } from "./RollText";
+import { SoundToggle } from "./SoundToggle";
 import { scrollToTarget, useLenis } from "./SmoothScroll";
 
 export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
@@ -54,6 +55,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
           <div className="flex items-center gap-2 sm:gap-6">
             <LocaleSwitch locale={locale} label={dict.nav.language} />
+            <SoundToggle labelOn={dict.nav.soundOn} labelOff={dict.nav.soundOff} />
             <button
               ref={menuButton}
               type="button"
