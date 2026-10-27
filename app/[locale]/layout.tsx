@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 import "../globals.css";
 import { getDictionary, isLocale, locales } from "@/lib/i18n";
 import { DeferredUI } from "@/components/layout/DeferredUI";
@@ -82,6 +83,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         </SmoothScroll>
         <DeferredUI dict={dict} locale={locale} />
         <PageTransition label="Wided Rouatbi" />
+        {/* Private visit stats in the Vercel dashboard: no cookies, nothing shown on the site */}
+        <Analytics />
         <RouteAnnouncer prefix={dict.a11y.pageChanged} />
       </body>
     </html>
